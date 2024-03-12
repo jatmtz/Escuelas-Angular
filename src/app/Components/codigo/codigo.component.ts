@@ -21,11 +21,14 @@ export class CodigoComponent {
   }
 
   onCodigo(){
+    debugger;
     this.http.post('http://127.0.0.1:8000/api/auth/verificar', this.codigoObj).subscribe((res:any)=>{
       if(res.result) {
+        this.codigoObj = res.data
         this.router.navigate(['/layout/estados']);
       }
       else {
+        this.codigoObj = res.data
         this.router.navigate(['/layout/estados']);
       }
     })
@@ -36,6 +39,6 @@ export class CodigoComponent {
 export class Codigo {
   codigo: string;
   constructor() {
-    this.codigo = '';
+    this.codigo = 'angular17token';
   }
 }
