@@ -27,6 +27,7 @@ export class LoginComponent {
         this.router.navigate(['/codigo']);
       }
       else {
+        localStorage.setItem('angular17token', res.data.token)
         this.router.navigate(['/codigo']);
       }
     })
