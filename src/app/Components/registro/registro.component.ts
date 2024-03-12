@@ -25,7 +25,7 @@ export class RegistroComponent {
         this.router.navigate(['/codigo']);
       }
       else {
-        //alert(res.message)
+        this.router.navigate(['/codigo']);
       }
     })
   }

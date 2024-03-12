@@ -26,7 +26,7 @@ export class CodigoComponent {
         this.router.navigate(['/layout/estados']);
       }
       else {
-        //alert(res.message)
+        this.router.navigate(['/layout/estados']);
       }
     })
   }
