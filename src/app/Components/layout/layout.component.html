@@ -1,0 +1,54 @@
+<mat-toolbar>
+    <button mat-icon-button *ngIf="sideNav.mode === 'over'" (click) = "sideNav.toggle()">
+        <mat-icon *ngIf="!sideNav.opened">menu</mat-icon>
+        <mat-icon *ngIf="sideNav.opened">close</mat-icon>
+    </button>
+    Sistema Escolar
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav>
+        <mat-nav-list>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/estados">
+                Estados
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/escuelas">
+                Escuelas
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/carreras">
+                Carreras
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/grupos">
+                Grupos
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/edificios">
+                Edificios
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/alumnos">
+                Alumnos
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/profesores">
+                Profesores
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/materias">
+                Materias
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/turnos">
+                Turnos
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/departamentos">
+                Departamentos
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/">
+                Salir <mat-icon>exit_to_app</mat-icon>
+            </mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <div class="content">
+            <router-outlet />
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+
