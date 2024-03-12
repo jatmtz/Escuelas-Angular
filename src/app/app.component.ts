@@ -8,13 +8,15 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { UserService } from './Services/user.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule, MatSidenavModule, MatButtonModule, MatDividerModule, MatIconModule, MatListModule, HttpClientModule, FormsModule ],
+  imports: [RouterOutlet, MatToolbarModule, MatSidenavModule, MatButtonModule, MatDividerModule, MatIconModule, MatListModule, HttpClientModule, FormsModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers: [UserService]
 })
 export class AppComponent {
   @ViewChild(MatSidenav, {static: true})
