@@ -23,6 +23,7 @@ export class LoginComponent {
   onLogin(){
     this.http.post('http://127.0.0.1:8000/api/auth/login', this.loginObj).subscribe((res:any)=>{
       if(res.result) {
+        localStorage.setItem('angular17token', res.data.token)
         this.router.navigate(['/codigo']);
       }
       else {

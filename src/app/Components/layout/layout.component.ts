@@ -8,6 +8,7 @@ import {MatListModule} from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import {BreakpointObserver} from '@angular/cdk/layout'
 import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -21,8 +22,8 @@ export class LayoutComponent implements OnInit {
   @ViewChild(MatSidenav, {static: true})
   sideNav!: MatSidenav;
 
-  
-  constructor(private observer: BreakpointObserver){
+  estados:any[]=[];
+  constructor(private observer: BreakpointObserver, private http:HttpClient){
 
   }
 
@@ -37,6 +38,15 @@ export class LayoutComponent implements OnInit {
         this.sideNav.mode="side";
         this.sideNav.open()
       }
+    })
+  }
+
+  getEstados(){
+    debugger;
+    this.http.get('http://127.0.0.1:8000/api/auth/getEstados').subscribe((res:any) => {
+      this.estados = res.data;
+    }, error=>{
+      alert("Error API")
     })
   }
 

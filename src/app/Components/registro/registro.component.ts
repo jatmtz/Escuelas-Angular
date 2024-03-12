@@ -22,10 +22,10 @@ export class RegistroComponent {
   onRegister(){
     this.http.post('http://127.0.0.1:8000/api/register', this.registerObj).subscribe((res:any)=>{
       if(res.result) {
-        this.router.navigate(['/codigo']);
+        this.router.navigate(['/login']);
       }
       else {
-        this.router.navigate(['/codigo']);
+        this.router.navigate(['/login']);
       }
     })
   }
