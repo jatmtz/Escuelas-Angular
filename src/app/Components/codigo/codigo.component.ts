@@ -39,6 +39,6 @@ export class CodigoComponent {
 export class Codigo {
   codigo: string;
   constructor() {
-    this.codigo = 'angular17token';
+    this.codigo = '';
   }
 }
