@@ -4,25 +4,26 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+
 @Component({
-  selector: 'app-registro',
+  selector: 'app-codigo',
   standalone: true,
   imports: [FormsModule, HttpClientModule],
-  templateUrl: './registro.component.html',
-  styleUrl: './registro.component.css'
+  templateUrl: './codigo.component.html',
+  styleUrl: './codigo.component.css'
 })
-export class RegistroComponent {
+export class CodigoComponent {
 
-  registerObj: Register;
+  codigoObj: Codigo;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.registerObj = new Register()
+    this.codigoObj = new Codigo()
   }
 
-  onRegister(){
-    this.http.post('http://127.0.0.1:8000/api/register', this.registerObj).subscribe((res:any)=>{
+  onCodigo(){
+    this.http.post('http://127.0.0.1:8000/api/auth/verificar', this.codigoObj).subscribe((res:any)=>{
       if(res.result) {
-        this.router.navigate(['/codigo']);
+        this.router.navigate(['/layout/estados']);
       }
       else {
         //alert(res.message)
@@ -32,14 +33,9 @@ export class RegistroComponent {
 
 }
 
-export class Register {
-  name: string;
-  email: string;
-  password: string;
+export class Codigo {
+  codigo: string;
   constructor() {
-    this.name = '';
-    this.email = '';
-    this.password = '';
+    this.codigo = '';
   }
 }
-

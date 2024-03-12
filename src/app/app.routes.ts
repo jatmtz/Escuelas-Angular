@@ -12,6 +12,7 @@ import { MateriasComponent } from './Components/materias/materias.component';
 import { ProfesoresComponent } from './Components/profesores/profesores.component';
 import { TurnosComponent } from './Components/turnos/turnos.component';
 import { RegistroComponent } from './Components/registro/registro.component';
+import { CodigoComponent } from './Components/codigo/codigo.component';
 
 export const routes: Routes = [
     {
@@ -19,6 +20,7 @@ export const routes: Routes = [
         component: LoginComponent
     },
     { path: 'registro', component: RegistroComponent },
+    { path: 'codigo', component: CodigoComponent },
     {
         path: 'layout',
         component: LayoutComponent,
