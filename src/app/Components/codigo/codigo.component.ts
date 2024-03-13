@@ -11,12 +11,12 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./codigo.component.css']
 })
 export class CodigoComponent {
-  codigo: string = '';
+  codigoObj: string = '';
 
   constructor(private userService: UserService, private router: Router) {}
 
   onCodigo() {
-    this.userService.verificarCodigo(this.codigo).subscribe((res: any) => {
+    this.userService.verificarCodigo(this.codigoObj).subscribe((res: any) => {
         if (res.msg === 'Codigo correcto') {
           this.router.navigate(['/layout/estados']);
         } else {
