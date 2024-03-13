@@ -20,15 +20,20 @@ import { EscuelaEditComponent } from './Components/escuela-edit/escuela-edit.com
 
 export const routes: Routes = [
     {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    },
+    {
         path: 'login',
         component: LoginComponent
     },
     { path: 'registro', component: RegistroComponent },
-    { path: 'codigo', component: CodigoComponent },
     {
-        path: 'layout',
+        path: '',
         component: LayoutComponent,
         children: [
+            { path: 'codigo', component: CodigoComponent },
             { path: 'alumnos', component: AlumnosComponent },
             { path: 'carreras', component: CarrerasComponent },
             { path: 'departamentos', component: DepartamentosComponent },
@@ -54,4 +59,5 @@ export const routes: Routes = [
         redirectTo: 'login',
         pathMatch: 'full'
     }
+
 ];

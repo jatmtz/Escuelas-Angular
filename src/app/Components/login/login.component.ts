@@ -2,26 +2,27 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../Services/user.service';
 import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
-  loginObj: any = {
-    "email": '',
-    "password": ''
-  };
+  loginObj: Login;
 
-  constructor(private router: Router, private userService: UserService) {}
+
+  constructor(private router: Router, private http: HttpClient) {
+    this.loginObj = new Login();
+  }
 
   login() {
-    this.userService.Onlogin(this.loginObj).subscribe((res: any) => {
+    this.http.post('http://127.0.0.1:8000/api/auth/login', this.loginObj).subscribe((res: any) => {
       if (res.access_token) {
         localStorage.setItem('access_token', res.access_token);
         this.router.navigate(['/codigo']);
@@ -29,5 +30,14 @@ export class LoginComponent {
         alert("error")
       }
     });
+  }
+}
+
+export class Login{
+  email: string;
+  password: string;
+  constructor() {
+    this.email = '';
+    this.password = '';
   }
 }
