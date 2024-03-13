@@ -77,7 +77,7 @@ export class EscuelaEditComponent {
     this.http.put('http://' + window.location.hostname + ':8000/api/putEscuelas/' + this.escuelaObj.id, this.escuelaObj).subscribe((res: any) => {
       if (res.msg === "Escuela actualizada") {
         alert("Escuela actualizada");
-        this.router.navigate(['/escuelas']);
+        this.router.navigate(['/layout/escuelas']);
       } else {
         console.log("Error al actualizar la escuela:", res);
       }

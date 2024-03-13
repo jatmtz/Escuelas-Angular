@@ -52,7 +52,7 @@ export class EstadoEditComponent  implements OnInit{
     this.http.put('http://' + window.location.hostname + ':8000/api/putEstados/' + this.estado.id, this.estadoObj).subscribe((res: any) => {
       if (res.msg === "Estado actualizado") {
         alert("Estado actualizado");
-        this.router.navigate(['/estados']);
+        this.router.navigate(['/layout/estados']);
       } else {
         console.log("Error al actualizar el estado:", res);
       }

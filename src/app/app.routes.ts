@@ -17,6 +17,7 @@ import { EstadoPostComponent } from './Components/estado-post/estado-post.compon
 import { EstadoEditComponent } from './Components/estado-edit/estado-edit.component';
 import { EscuelaPostComponent } from './Components/escuela-post/escuela-post.component';
 import { EscuelaEditComponent } from './Components/escuela-edit/escuela-edit.component';
+import { CarreraPostComponent } from './carrera-post/carrera-post.component';
 
 export const routes: Routes = [
     {
@@ -29,11 +30,12 @@ export const routes: Routes = [
         component: LoginComponent
     },
     { path: 'registro', component: RegistroComponent },
+    { path: 'codigo', component: CodigoComponent },
     {
         path: 'layout',
         component: LayoutComponent,
         children: [
-            { path: 'codigo', component: CodigoComponent },
+
             { path: 'alumnos', component: AlumnosComponent },
             { path: 'carreras', component: CarrerasComponent },
             { path: 'departamentos', component: DepartamentosComponent },
@@ -54,6 +56,8 @@ export const routes: Routes = [
     {path: 'editar/:id',component: EstadoEditComponent},
     { path: 'escuelas/agregar', component: EscuelaPostComponent},
     { path: 'escuelas/editar/:id', component: EscuelaEditComponent},
+    { path: 'agregar', component: CarreraPostComponent },
+    {path: 'editar/:id',component: EstadoEditComponent},
     {
         path: '**',
         redirectTo: 'login',
