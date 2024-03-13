@@ -11,4 +11,8 @@ export class UserService {
   Onlogin(credentials: any) {
     return this.http.post<any>('http://127.0.0.1:8000/api/auth/login', credentials);
   }
+
+  verificarCodigo(credentials: any) {
+    return this.http.post<any>('http://127.0.0.1:8000/api/auth/verificar', credentials);
+  }
 }
