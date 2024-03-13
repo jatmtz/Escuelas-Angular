@@ -1,15 +1,16 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private cookieService: CookieService) { }
 
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('access_token');
-    return !!token; // Devuelve true si el token está presente, de lo contrario false
+    const token = this.cookieService.get('token');
+    return !!token;
   }
 }

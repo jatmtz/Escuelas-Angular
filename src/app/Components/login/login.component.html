@@ -41,7 +41,7 @@
                   <input type="password" [(ngModel)] = "loginObj.password" name = "password" class="form-control" placeholder="Contraseña" required>
                 </div>
   
-                <button type="submit" class="btn btn-block mb-4 text-white" (click)="login()" style="background-color: brown;">Iniciar Sesión</button>
+                <button type="submit" class="btn btn-block mb-4 text-white" [disabled]="isProcessing" (click)="login()" style="background-color: brown;">Iniciar Sesión</button>
   
               </form>
             </div>

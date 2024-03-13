@@ -1,24 +1,30 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../Services/user.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../Services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-codigo',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, AppComponent],
   templateUrl: './codigo.component.html',
   styleUrls: ['./codigo.component.css']
 })
 export class CodigoComponent {
-  codigoObj: string = '';
+  isProcessing=false;
+  codigoObj: number = 0;
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router) {}
+  constructor(private userService: UserService, private authService: AuthService, private router: Router, private http: HttpClient, private cookieService: CookieService) {}
 
   onCodigo() {
+    this.isProcessing = true;
     if (!this.authService.isLoggedIn()) {
       console.error('No se ha encontrado el token de acceso.');
+      
       alert('Por favor, inicie sesión primero.');
       this.router.navigate(['/login']);
       return;

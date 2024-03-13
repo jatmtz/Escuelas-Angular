@@ -35,7 +35,7 @@
                 <input type="text" [(ngModel)]="codigoObj" name="codigo" class="form-control" placeholder="123456" required>
               </div>
 
-              <button type="submit" class="btn btn-block mb-4 text-white" style="background-color: brown;">Verificar Código</button>
+              <button type="submit" class="btn btn-block mb-4 text-white" [disabled]="isProcessing" style="background-color: brown;">Verificar Código</button>
 
             </form>
           </div>

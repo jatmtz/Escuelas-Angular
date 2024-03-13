@@ -1,21 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { Observable, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthInterceptor implements HttpInterceptor {
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('access_token');
+  constructor(private cookieService: CookieService, private router: Router) { }
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+
+    const token: string = this.cookieService.get('token');
+    let req = request.clone(); // Corrected line
+
     if (token) {
-      const authReq = request.clone({
+      req = req.clone({ // Use the cloned request
         setHeaders: {
-          Authorization: `Bearer ${token}`
+          authorization: `bearer ${token}`
         }
       });
-      return next.handle(authReq);
-    } else {
-      return next.handle(request);
     }
+    return next.handle(req).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === 401) {
+          this.router.navigateByUrl('/login');
+        }
+        return throwError(err);
+      })
+    );
   }
 }
