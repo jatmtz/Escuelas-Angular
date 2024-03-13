@@ -16,15 +16,20 @@ import { CodigoComponent } from './Components/codigo/codigo.component';
 
 export const routes: Routes = [
     {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    },
+    {
         path: 'login',
         component: LoginComponent
     },
     { path: 'registro', component: RegistroComponent },
-    { path: 'codigo', component: CodigoComponent },
     {
-        path: 'layout',
+        path: '',
         component: LayoutComponent,
         children: [
+            { path: 'codigo', component: CodigoComponent },
             { path: 'alumnos', component: AlumnosComponent },
             { path: 'carreras', component: CarrerasComponent },
             { path: 'departamentos', component: DepartamentosComponent },
@@ -37,9 +42,5 @@ export const routes: Routes = [
             { path: 'turnos', component: TurnosComponent },
         ]
     },
-    {
-        path: '**',
-        redirectTo: 'login',
-        pathMatch: 'full'
-    }
+
 ];
