@@ -25,6 +25,8 @@ import { EdificioPostComponent } from './Components/edificio-post/edificio-post.
 import { EdificioEditComponent } from './Components/edificio-edit/edificio-edit.component';
 import { turnoPostComponent } from './Components/turno-post/turno-post.component';
 import { turnoEditComponent } from './Components/turno-edit/turno-edit.component';
+import { GrupoPostComponent } from './Components/grupos-post/grupos-post.component';
+import { GruposEditComponent } from './Components/grupos-edit/grupos-edit.component';
 
 export const routes: Routes = [
     {
@@ -74,6 +76,9 @@ export const routes: Routes = [
 
     { path: 'turnos/agregar', component: turnoPostComponent },
     {path: 'turnos/editar/:id',component: turnoEditComponent },
+
+    { path: 'grupos/agregar', component: GrupoPostComponent },
+    {path: 'grupos/editar/:id',component: GruposEditComponent },
     {
         path: '**',
         redirectTo: 'login',
