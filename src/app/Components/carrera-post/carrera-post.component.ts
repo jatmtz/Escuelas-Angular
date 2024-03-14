@@ -1,6 +1,6 @@
 import { Component,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
@@ -72,7 +72,9 @@ export class CarreraPostComponent {
     if (this.carreraForm.invalid) {
       return; 
     }
-    this.http.post('http://' + window.location.hostname + ':8000/api/postCarreras', this.carreraObj).subscribe(
+    const token = localStorage.getItem('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://127.0.0.1:8000/api/auth/postCarreras', this.carreraObj, { headers: headers2 }).subscribe(
       (res: any) => {
         if (res.msg === "Carrera creada") {
           alert("Carrera creada");

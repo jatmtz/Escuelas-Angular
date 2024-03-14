@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
@@ -49,7 +49,9 @@ export class EstadoEditComponent  implements OnInit{
   }
 
   editarEstado() {
-    this.http.put('http://' + window.location.hostname + ':8000/api/putEstados/' + this.estado.id, this.estadoObj).subscribe((res: any) => {
+    const token = localStorage.getItem('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.put('http://' + window.location.hostname + ':8000/api/auth/putEstados/' + this.estado.id, this.estadoObj, { headers: headers2 } ).subscribe((res: any) => {
       if (res.msg === "Estado actualizado") {
         alert("Estado actualizado");
         this.router.navigate(['/layout/estados']);
@@ -60,7 +62,9 @@ export class EstadoEditComponent  implements OnInit{
   }
 
   obtenerEstadoPorId(estadoId: any) {
-    this.http.get('http://' + window.location.hostname + ':8000/api/showEstados/' + estadoId).subscribe((res: any) => {
+    const token = localStorage.getItem('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/showEstados/' + estadoId, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Estado") {
         this.estado = res.data;
         this.estadoObj.id = this.estado.id;

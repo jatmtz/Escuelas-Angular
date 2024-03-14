@@ -1,6 +1,6 @@
 import { Component,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
@@ -45,7 +45,9 @@ export class EstadoPostComponent {
     if (this.estadoForm.invalid) {
       return;
     }
-    this.http.post('http://' + window.location.hostname + ':8000/api/postEstados', this.estadoObj).subscribe(
+    const token = localStorage.getItem('token');
+    const hederss = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://127.0.0.1:8000/api/auth/postEstados', this.estadoObj, { headers: hederss }).subscribe(
       (res: any) => {
         if (res.msg === "Estado creado") {
           alert("Estado creado");

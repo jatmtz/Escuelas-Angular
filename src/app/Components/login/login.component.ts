@@ -26,6 +26,7 @@ export class LoginComponent {
     this.isProcessing = true;
     this.http.post('http://127.0.0.1:8000/api/auth/login', this.loginObj).subscribe((res: any) => {
       if (res.access_token) {
+        localStorage.setItem('token', res.access_token);
         this.cookieService.set('token', res.access_token);
         this.router.navigate(['/codigo']);
       } else {

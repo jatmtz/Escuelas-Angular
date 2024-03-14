@@ -10,7 +10,7 @@ export class AuthService {
   constructor(private cookieService: CookieService) { }
 
   isLoggedIn(): boolean {
-    const token = this.cookieService.get('token');
+    const token = localStorage.getItem('token');
     return !!token;
   }
 }

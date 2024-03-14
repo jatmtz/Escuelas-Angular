@@ -32,7 +32,7 @@
             <form (submit)="onCodigo()">
               <div class="form-group mb-4">
                 <h5>Introduce el código:</h5>
-                <input type="text" [(ngModel)]="codigoObj" name="codigo" class="form-control" placeholder="123456" required>
+                <input type="number" [(ngModel)]="codigo" name="codigo" class="form-control" placeholder="123456" required>
               </div>
 
               <button type="submit" class="btn btn-block mb-4 text-white" [disabled]="isProcessing" style="background-color: brown;">Verificar Código</button>

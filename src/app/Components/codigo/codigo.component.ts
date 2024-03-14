@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../Services/user.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../Services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from '../../app.component';
+import exp from 'constants';
 
 @Component({
   selector: 'app-codigo',
@@ -16,33 +17,43 @@ import { AppComponent } from '../../app.component';
 })
 export class CodigoComponent {
   isProcessing=false;
-  codigoObj: number = 0;
+  codigo: number=0;
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router, private http: HttpClient, private cookieService: CookieService) {}
+
+  constructor(private userService: UserService, private authService: AuthService, private router: Router, private http: HttpClient, private cookieService: CookieService) {
+
+  }
 
   onCodigo() {
-    this.isProcessing = true;
-    if (!this.authService.isLoggedIn()) {
-      console.error('No se ha encontrado el token de acceso.');
-      
-      alert('Por favor, inicie sesión primero.');
-      this.router.navigate(['/login']);
-      return;
+    const token = localStorage.getItem('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    console.log(this.codigo);
+    this.http.post('http://127.0.0.1:8000/api/auth/verify', { codigo: this.codigo }, { headers: headers2 }).subscribe((rest: any) => {
+          this.router.navigate(['/layout']);
+      });
+      this.isProcessing = true;
+    const hederss = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://127.0.0.1:8000/api/auth/me', this.codigo, { headers: hederss }).subscribe((res: any) => {
+      console.log(res);
     }
-
-    this.userService.verificarCodigo(this.codigoObj).subscribe(
-      (res: any) => {
-        if (res.msg === 'Codigo correcto') {
-          this.router.navigate(['/layout/estados']);
-        } else {
-          console.error('Error: No se pudo verificar el código.');
-          alert('No se pudo verificar el código.');
-        }
-      },
-      (error) => {
-        console.error('Error en la solicitud de verificación del código:', error);
-        alert('Error en la solicitud de verificación del código.');
-      }
     );
+    this.isProcessing = false;
+  }
+
+  prueba() {
+    const token = localStorage.getItem('token');
+    const hederss = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://127.0.0.1:8000/api/auth/me', { headers: hederss }).subscribe((res: any) => {
+      console.log(res);
+    });
+
+  }
+
+}
+
+export class Codigo {
+  codigo: number;
+  constructor() {
+    this.codigo = 0;
   }
 }
