@@ -126,10 +126,14 @@ export class Carrera {
 export class Escuela {
   id: number;
   nombre: string;
+  clave: string;
+  estado_id: string;
   active: boolean;
   constructor() {
     this.id = 0;
     this.nombre = '';
+    this.clave = '';
+    this.estado_id= '';
     this.active = true;
   }
 }

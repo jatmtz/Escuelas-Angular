@@ -1,0 +1,47 @@
+<section class="jumbotron jumbotron-fluid" style="background-color: rgb(255, 255, 255);">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-10" style="margin-top: 10%; margin-bottom: 20%;">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="turnoForm">
+                <div class="form-group">
+                  <div class="form-check mb-3">
+                    <label for="turno">Introduce el turno del turno:</label>
+                    <input formControlName="turno" id="turno" name="turno" class="form-control" [class.is-invalid]="turnoForm.get('turno')?.invalid && turnoForm.get('turno')?.touched" placeholder="Ej. Coahuila" required minlength="3" [(ngModel)]="turnoObj.turno">
+                    <div class="invalid-feedback" *ngIf="turnoForm.get('turno')?.hasError('required') && turnoForm.get('turno')?.touched">
+                      El turno es obligatorio.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="turnoForm.get('turno')?.hasError('minlength') && turnoForm.get('turno')?.touched">
+                      El turno debe tener al menos 3 caracteres.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="turnoForm.get('turno')?.hasError('maxlength') && turnoForm.get('turno')?.touched">
+                      El turno no debe exceder los 50 caracteres.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="turnoForm.get('turno')?.hasError('pattern') && turnoForm.get('turno')?.touched">
+                      El turno debe contener solo letras y espacios.
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4 offset-md-4">
+                        <div class="d-grid mx-auto">
+                            <button type="submit" class="btn btn-outline-success btn-block d-flex align-items-center justify-content-center"
+                              (click)="editarturno()">
+                                <mat-icon>save</mat-icon> Agregar
+                            </button> 
+                            <hr>
+                            <a class="btn btn-outline-danger btn-block d-flex align-items-center justify-content-center" [routerLink]="['/layout/turnos']">
+                                <mat-icon>cancel</mat-icon> Cancelar
+                            </a>     
+                        </div>
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

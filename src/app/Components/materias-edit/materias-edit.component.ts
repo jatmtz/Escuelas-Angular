@@ -10,8 +10,8 @@ import { MatIcon } from '@angular/material/icon';
   selector: 'app-materia-edit',
   standalone: true,
   imports: [FormsModule, HttpClientModule, MatIcon,RouterLink, ReactiveFormsModule, CommonModule],
-  templateUrl: './materia-edit.component.html',
-  styleUrl: './materia-edit.component.css'
+  templateUrl: './materias-edit.component.html',
+  styleUrl: './materias-edit.component.css'
 })
 export class MateriaEditComponent {
   materiaObj: Materia;
@@ -126,10 +126,14 @@ export class Materia {
 export class Carrera {
   id: number;
   nombre: string;
+  clave: string;
+  escuela_id: string;
   active: boolean;
   constructor() {
     this.id = 0;
     this.nombre = '';
+    this.clave = '';
+    this.escuela_id = '';
     this.active = true;
   }
 }

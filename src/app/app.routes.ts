@@ -10,7 +10,7 @@ import { EstadosComponent } from './Components/estados/estados.component';
 import { GruposComponent } from './Components/grupos/grupos.component';
 import { MateriasComponent } from './Components/materias/materias.component';
 import { DocentesComponent } from './Components/docentes/docentes.component';
-import { TurnosComponent } from './Components/turnos/turnos.component';
+import { turnosComponent } from './Components/turnos/turnos.component';
 import { RegistroComponent } from './Components/registro/registro.component';
 import { CodigoComponent } from './Components/codigo/codigo.component';
 import { EstadoPostComponent } from './Components/estado-post/estado-post.component';
@@ -23,6 +23,8 @@ import { DocentePostComponent } from './Components/docente-post/docente-post.com
 import { DocenteEditComponent } from './Components/docente-edit/docente-edit.component';
 import { EdificioPostComponent } from './Components/edificio-post/edificio-post.component';
 import { EdificioEditComponent } from './Components/edificio-edit/edificio-edit.component';
+import { turnoPostComponent } from './Components/turno-post/turno-post.component';
+import { turnoEditComponent } from './Components/turno-edit/turno-edit.component';
 
 export const routes: Routes = [
     {
@@ -54,7 +56,7 @@ export const routes: Routes = [
             { path: 'grupos', component: GruposComponent },
             { path: 'materias', component: MateriasComponent },
             { path: 'profesores', component: DocentesComponent },
-            { path: 'turnos', component: TurnosComponent },
+            { path: 'turnos', component: turnosComponent },
         ]
     },
     { path: 'agregar', component: EstadoPostComponent },
@@ -69,6 +71,9 @@ export const routes: Routes = [
 
     { path: 'edificios/agregar', component: EdificioPostComponent },
     {path: 'edificios/editar/:id',component: EdificioEditComponent },
+
+    { path: 'turnos/agregar', component: turnoPostComponent },
+    {path: 'turnos/editar/:id',component: turnoEditComponent },
     {
         path: '**',
         redirectTo: 'login',
