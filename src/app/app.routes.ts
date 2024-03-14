@@ -27,6 +27,10 @@ import { turnoPostComponent } from './Components/turno-post/turno-post.component
 import { turnoEditComponent } from './Components/turno-edit/turno-edit.component';
 import { GrupoPostComponent } from './Components/grupos-post/grupos-post.component';
 import { GruposEditComponent } from './Components/grupos-edit/grupos-edit.component';
+import { MateriaPostComponent } from './Components/materias-post/materias-post.component';
+import { MateriaEditComponent } from './Components/materias-edit/materias-edit.component';
+import { RolPostComponent } from './Components/rol-post/rol-post.component';
+import { RolEditComponent } from './Components/roles-edit/roles-edit.component';
 
 export const routes: Routes = [
     {
@@ -79,6 +83,12 @@ export const routes: Routes = [
 
     { path: 'grupos/agregar', component: GrupoPostComponent },
     {path: 'grupos/editar/:id',component: GruposEditComponent },
+    
+    { path: 'materias/agregar', component: MateriaPostComponent },
+    {path: 'materias/editar/:id',component: MateriaEditComponent },
+
+    { path: 'roles/agregar', component: RolPostComponent },
+    {path: 'roles/editar/:id',component: RolEditComponent },
     {
         path: '**',
         redirectTo: 'login',
