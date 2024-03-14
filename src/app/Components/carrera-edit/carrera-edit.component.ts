@@ -7,25 +7,25 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-escuela-edit',
+  selector: 'app-carrera-edit',
   standalone: true,
   imports: [FormsModule, HttpClientModule, MatIcon,RouterLink, ReactiveFormsModule, CommonModule],
-  templateUrl: './escuela-edit.component.html',
-  styleUrl: './escuela-edit.component.css'
+  templateUrl: './carrera-edit.component.html',
+  styleUrl: './carrera-edit.component.css'
 })
-export class EscuelaEditComponent {
+export class CarreraEditComponent {
+  carreraObj: Carrera;
+  carreraForm: FormGroup;
   escuelaObj: Escuela;
-  escuelaForm: FormGroup;
-  estadoObj: Estado;
-  estados: Estado[] = [];
+  escuelas: Escuela[] = [];
   
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router, private formBuilder: FormBuilder) {
-    const escuelaId = this.route.snapshot.paramMap.get('id');
-    this.obtenerEscuelaPorId(escuelaId);
-    this.escuelaForm = this.formBuilder.group({
+    const carreraId = this.route.snapshot.paramMap.get('id');
+    this.obtenerCarreraPorId(carreraId);
+    this.carreraForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
         Validators.minLength(3),
@@ -38,19 +38,19 @@ export class EscuelaEditComponent {
         Validators.maxLength(50),
         Validators.pattern(/^[a-zA-ZñÑ\s]+$/)
       ]],
-      estado_id: ['', [
+      escuela_id: ['', [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]]
     });
+    this.carreraObj = new Carrera();
     this.escuelaObj = new Escuela();
-    this.estadoObj = new Estado();
   }
 
   ngOnInit(): void {
-    this.escuelaForm = this.formBuilder.group({
+    this.carreraForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
         Validators.minLength(3),
@@ -62,68 +62,68 @@ export class EscuelaEditComponent {
         Validators.minLength(3),
         Validators.maxLength(10)
       ]],
-      estado_id: ['', [
+      escuela_id: ['', [
         Validators.required,
         Validators.minLength(1),
         Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]]
     });
-    this.obtenerEstados();
+    this.obtenerEscuelas();
   }
   
 
-  editarEscuela() {
-    this.http.put('http://127.0.0.0.1:8000/api/putEscuelas/' + this.escuelaObj.id, this.escuelaObj).subscribe((res: any) => {
-      if (res.msg === "Escuela actualizada") {
-        alert("Escuela actualizada");
-        this.router.navigate(['/layout/escuelas']);
+  editarCarrera() {
+    this.http.put('http://127.0.0.0.1:8000/api/putCarreras/' + this.carreraObj.id, this.carreraObj).subscribe((res: any) => {
+      if (res.msg === "Carrera actualizada") {
+        alert("Carrera actualizada");
+        this.router.navigate(['/layout/carreras']);
       } else {
-        console.log("Error al actualizar la escuela:", res);
+        console.log("Error al actualizar la carrera:", res);
       }
     });
   }
 
-  obtenerEstados() {
-    this.http.get('http://127.0.0.0.1:8000/api/getEstados').subscribe((res: any) => {
-      if (res.msg === "Estados") {
-        this.estados = res.data;
+  obtenerEscuelas() {
+    this.http.get('http://127.0.0.0.1:8000/api/getEscuelas').subscribe((res: any) => {
+      if (res.msg === "Escuelas") {
+        this.escuelas = res.data;
       } else {
-        console.log("Error al obtener los estados:", res);
+        console.log("Error al obtener los escuelas:", res);
       }
     });
   }
 
-  obtenerEscuelaPorId(escuelaId: any) {
-    this.http.get('http://127.0.0.0.1:8000/api/showEscuelas/' + escuelaId).subscribe((res: any) => {
-      if (res.msg === "Escuela") {
-        this.escuelaObj = res.data;
-        this.escuelaObj.id = this.escuelaObj.id;
-        this.escuelaObj.nombre = this.escuelaObj.nombre;
-        this.escuelaObj.clave = this.escuelaObj.clave;
-        this.escuelaObj.estado_id = this.escuelaObj.estado_id;
+  obtenerCarreraPorId(carreraId: any) {
+    this.http.get('http://127.0.0.0.1:8000/api/showCarreras/' + carreraId).subscribe((res: any) => {
+      if (res.msg === "Carrera") {
+        this.carreraObj = res.data;
+        this.carreraObj.id = this.carreraObj.id;
+        this.carreraObj.nombre = this.carreraObj.nombre;
+        this.carreraObj.clave = this.carreraObj.clave;
+        this.carreraObj.escuela_id = this.carreraObj.escuela_id;
       } else {
-        console.log("Error al obtener los detalles de la escuela:", res);
+        console.log("Error al obtener los detalles de la carrera:", res);
       }
     });
   }
 
 }
 
-export class Escuela {
+export class Carrera {
   id: number;
   nombre: string;
   clave: string;
-  estado_id: number;
+  escuela_id: number;
   constructor(){
     this.id = 0;
     this.nombre = '';
     this.clave = '';
-    this.estado_id = 0;
+    this.escuela_id = 0;
   }
 }
 
-export class Estado {
+export class Escuela {
   id: number;
   nombre: string;
   active: boolean;

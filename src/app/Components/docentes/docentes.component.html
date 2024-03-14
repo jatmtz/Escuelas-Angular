@@ -1,0 +1,48 @@
+<section>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-4 offset-md-4">
+                <div class="d-grid mx-auto">
+                    <a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/docentes/agregar']">
+                            <mat-icon>add_circle</mat-icon>AÑADIR
+                    </a>        
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido Materno</th>
+                        <th>Apellido Paterno</th>
+                        <th>RFC</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let docente of docentes">
+                        <td>{{ docente.id }}</td>
+                        <td>{{ docente.nombre }}</td>
+                        <td>{{ docente.apellido_materno }}</td>
+                        <td>{{ docente.apellido_paterno }}</td>
+                        <td>{{ docente.rfc }}</td>
+                        <td>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-warning" (click)="editarDocente(docente)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger" (click)="eliminarDocente(docente)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>    
+        </div>
+    </div>
+  </section>

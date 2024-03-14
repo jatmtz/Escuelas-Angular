@@ -1,0 +1,70 @@
+<section class="jumbotron jumbotron-fluid" style="background-color: rgb(255, 255, 255);">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-10" style="margin-top: 10%; margin-bottom: 20%;">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="carreraForm">
+                <div class="form-group">
+                  <h1 class="display-4 text-center">Agregar Carrera</h1>
+                  <div class="form-check mb-3">
+                    <label for="nombre">Nombre:</label>
+                    <input formControlName="nombre" id="nombre" name="nombre" class="form-control" [class.is-invalid]="carreraForm.get('nombre')?.invalid && carreraForm.get('nombre')?.touched" placeholder="Ej. Universiada Tecnologica" required minlength="3" [(ngModel)]="carreraObj.nombre">
+                    <div class="invalid-feedback" *ngIf="carreraForm.get('nombre')?.hasError('required') && carreraForm.get('nombre')?.touched">
+                      El nombre es obligatorio.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="carreraForm.get('nombre')?.hasError('minlength') && carreraForm.get('nombre')?.touched">
+                      El nombre debe tener al menos 3 caracteres.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="carreraForm.get('nombre')?.hasError('maxlength') && carreraForm.get('nombre')?.touched">
+                      El nombre no debe exceder los 50 caracteres.
+                    </div>
+                    <div class="invalid-feedback" *ngIf="carreraForm.get('nombre')?.hasError('pattern') && carreraForm.get('nombre')?.touched">
+                      El nombre debe contener solo letras y espacios.
+                    </div>
+                  </div>
+                  <div class="form-check mb-3">
+                        <label for="clave">Clave:</label>
+                        <input formControlName="clave" id="clave" name="clave" class="form-control" [class.is-invalid]="carreraForm.get('clave')?.invalid && carreraForm.get('clave')?.touched" placeholder="Ae3Fds" required minlength="3" [(ngModel)]="carreraObj.clave">
+                        <div class="invalid-feedback" *ngIf="carreraForm.get('clave')?.hasError('required') && carreraForm.get('clave')?.touched">
+                        La clave es obligatoria.
+                        </div>
+                        <div class="invalid-feedback" *ngIf="carreraForm.get('clave')?.hasError('minlength') && carreraForm.get('clave')?.touched">
+                        La clave debe tener al menos 3 caracteres.
+                        </div>
+                        <div class="invalid-feedback" *ngIf="carreraForm.get('clave')?.hasError('maxlength') && carreraForm.get('clave')?.touched">
+                        La clave no debe exceder los 10 caracteres.
+                        </div>
+                  </div>
+                  <div class="form-check mb-3">
+                        <label for="escuela">Escuela:</label>
+                        <select formControlName="escuela_id" id="escuela" name="escuela" class="form-control" [class.is-invalid]="carreraForm.get('escuela_id')?.invalid && carreraForm.get('escuela_id')?.touched" required [(ngModel)]="carreraObj.escuela_id">
+                        <option value="" disabled selected>Selecciona un escuela</option>
+                        <option *ngFor="let escuela of escuelas" [value]="escuela.id">{{escuela.nombre}}</option>
+                        </select>
+                        <div class="invalid-feedback" *ngIf="carreraForm.get('escuela_id')?.hasError('required') && carreraForm.get('escuela_id')?.touched">
+                        El escuela es obligatorio.
+                        </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4 offset-md-4">
+                        <div class="d-grid mx-auto">
+                            <button type="submit" class="btn btn-outline-success btn-block d-flex align-items-center justify-content-center" 
+                              (click)="editarCarrera()">
+                                <mat-icon>save</mat-icon> Agregar
+                            </button> 
+                            <hr>
+                            <a class="btn btn-outline-danger btn-block d-flex align-items-center justify-content-center" [routerLink]="['/layout/carreras']">
+                                <mat-icon>cancel</mat-icon> Cancelar
+                            </a>     
+                        </div>
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
