@@ -20,6 +20,9 @@ import { EscuelaEditComponent } from './Components/escuela-edit/escuela-edit.com
 import { CarreraPostComponent } from './Components/carrera-post/carrera-post.component';
 import { CarreraEditComponent } from './Components/carrera-edit/carrera-edit.component';
 import { DocentePostComponent } from './Components/docente-post/docente-post.component';
+import { DocenteEditComponent } from './Components/docente-edit/docente-edit.component';
+import { EdificioPostComponent } from './Components/edificio-post/edificio-post.component';
+import { EdificioEditComponent } from './Components/edificio-edit/edificio-edit.component';
 
 export const routes: Routes = [
     {
@@ -50,7 +53,7 @@ export const routes: Routes = [
             ]},
             { path: 'grupos', component: GruposComponent },
             { path: 'materias', component: MateriasComponent },
-            { path: 'profesores', component: ProfesoresComponent },
+            { path: 'profesores', component: DocentesComponent },
             { path: 'turnos', component: TurnosComponent },
         ]
     },
@@ -62,7 +65,10 @@ export const routes: Routes = [
     {path: 'carreras/editar/:id',component: CarreraEditComponent},
     
     { path: 'docentes/agregar', component: DocentePostComponent },
-    {path: 'docentes/editar/:id',component: },
+    {path: 'docentes/editar/:id',component: DocenteEditComponent },
+
+    { path: 'edificios/agregar', component: EdificioPostComponent },
+    {path: 'edificios/editar/:id',component: EdificioEditComponent },
     {
         path: '**',
         redirectTo: 'login',
