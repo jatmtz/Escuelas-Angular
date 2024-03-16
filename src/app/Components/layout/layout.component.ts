@@ -8,7 +8,10 @@ import {MatListModule} from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import {BreakpointObserver} from '@angular/cdk/layout'
 import { RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../Services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,7 +26,8 @@ export class LayoutComponent implements OnInit {
   sideNav!: MatSidenav;
 
   estados:any[]=[];
-  constructor(private observer: BreakpointObserver, private http:HttpClient){
+  constructor(private observer: BreakpointObserver, private http:HttpClient, 
+    private authService: AuthService, private router: Router, private cookieService: CookieService){
 
   }
 
@@ -39,6 +43,18 @@ export class LayoutComponent implements OnInit {
         this.sideNav.open()
       }
     })
+  }
+
+  logout(){
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://127.0.0.1:8000/api/auth/logout', {}, {headers: headers2}).subscribe((res:any) => {
+      console.log(res);
+    }, error=>{
+      alert("Error API")
+    })
+    this.authService.isLogout();
+    this.router.navigate(['/login']);
   }
 
   getEstados(){

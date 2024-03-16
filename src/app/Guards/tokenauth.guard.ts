@@ -8,7 +8,8 @@ import { AuthService } from '../Services/auth.service';
 export const tokenauthGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  const token = localStorage.getItem('token');
+  const cookieService = inject(CookieService);
+  const token = cookieService.get('token');
   if (authService.isLoggedIn() && token) { 
     return true;
   }
@@ -23,11 +24,12 @@ export const verificaGuard: CanActivateFn = (route, state) => {
   const cookieService = inject(CookieService);
   const token = localStorage.getItem('token');
   if (authService.isLoggedIn() && token) { 
-    const token = cookieService.get('token');
-    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    http.post('http://127.0.0.1:8000/api/auth/me',{ headers: headers2 }).subscribe((rest: any) => {
+    const headerss = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    http.post('http://127.0.0.1:8000/api/auth/me', {}, { headers: headerss }).subscribe((rest: any) => {
+      console.log(headerss);
       console.log(rest);
       if (rest && rest.verificado === 1) {
+        cookieService.delete('rol');
         cookieService.set('rol', rest.rol_id);
         return true;
       }
@@ -68,7 +70,6 @@ export const rolUser = (route: Route, segments: UrlSegment[]) => {
   const cookieService = inject(CookieService);
   const authService = inject(AuthService);
   const router = inject(Router);
-  const http = inject(HttpClient);
   const token = localStorage.getItem('token');
   if (authService.isLoggedIn() && token) { 
     if (cookieService.get('rol') === '2' || cookieService.get('rol') === '1'){

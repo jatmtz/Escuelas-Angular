@@ -3,9 +3,9 @@
         <div class="row mt-3">
             <div class="col-md-4 offset-md-4">
                 <div class="d-grid mx-auto">
-                    <a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/agregar']">
+                    @if (rol == "1" || rol == "3") { <a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/agregar']">
                             <mat-icon>add_circle</mat-icon>AÑADIR
-                    </a>        
+                    </a>   }     
                 </div>
             </div>
         </div>
@@ -16,23 +16,23 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th>Acciones</th>
+                        @if (rol == "1" || rol == "3") { <th>Acciones</th> }
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let estado of estados">
                         <td>{{ estado.id }}</td>
                         <td>{{ estado.nombre }}</td>
-                        <td>
+                        @if (rol == "1" || rol == "3"){<td>
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-warning" (click)="editarEstado(estado)">
+                            @if (rol == "1" || rol == "3"){<button type="button" class="btn btn-outline-warning" (click)="editarEstado(estado)">
                                 <mat-icon>edit</mat-icon>
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" (click)="eliminarEstado(estado)">
+                            </button>}
+                            @if (rol == "1"){<button type="button" class="btn btn-outline-danger" (click)="eliminarEstado(estado)">
                                 <mat-icon>delete</mat-icon>
-                            </button>
+                            </button>}
                         </div>
-                        </td>
+                        </td>}
                     </tr>
                     </tbody>
                 </table>

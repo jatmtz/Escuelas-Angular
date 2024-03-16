@@ -16,6 +16,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class EstadosComponent implements OnInit{
   estadoObj: Estado;
+  rol : string = '';
 
   constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
     this.estadoObj = new Estado()
@@ -24,6 +25,7 @@ export class EstadosComponent implements OnInit{
   estados: Estado[] = [];
 
   ngOnInit(): void {
+    this.rol = this.cookieService.get('rol');
     this.obtenerEstados();
   }
 

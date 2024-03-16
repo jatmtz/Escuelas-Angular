@@ -16,12 +16,16 @@ import { CookieService } from 'ngx-cookie-service';
 export class EscuelasComponent {
   escuelaObj: Escuela;
   escuelas: Escuela[] = [];
+  rol : string='';
 
   constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
     this.escuelaObj = new Escuela()
+
   }
 
   ngOnInit(): void {
+    console.log('Rol:', this.cookieService.get('rol'));
+    this.rol = this.cookieService.get('rol');
     this.obtenerEscuelas();
   }
 

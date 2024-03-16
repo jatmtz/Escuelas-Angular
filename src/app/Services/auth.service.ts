@@ -28,5 +28,12 @@ export class AuthService {
     return (Math.floor((new Date).getTime() / 1000)) >= expiry;
   }
 
+  isLogout(): boolean {
+    this.cookieService.delete('token');
+    this.cookieService.delete('rol');
+    localStorage.removeItem('token');
+    return true;
+  }
+
 
 }
