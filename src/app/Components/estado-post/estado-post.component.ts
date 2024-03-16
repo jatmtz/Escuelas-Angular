@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} f
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-estado-post',
@@ -17,7 +18,7 @@ export class EstadoPostComponent {
   estadoObj: Estado;
   estadoForm: FormGroup;
   
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) {
     this.estadoForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
@@ -45,7 +46,7 @@ export class EstadoPostComponent {
     if (this.estadoForm.invalid) {
       return;
     }
-    const token = localStorage.getItem('token');
+    const token = this.cookieService.get('token');
     const hederss = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.post('http://127.0.0.1:8000/api/auth/postEstados', this.estadoObj, { headers: hederss }).subscribe(
       (res: any) => {

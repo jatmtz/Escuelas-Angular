@@ -51,27 +51,16 @@ export const rolAdmin = (route: Route, segments: UrlSegment[]) => {
   if (authService.isLoggedIn() && token) { 
     const token = cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    http.post('http://127.0.0.1:8000/api/auth/me',{ headers: headers2 }).subscribe((rest: any) => {
-      console.log(rest);
-      if (rest && rest.rol_id === 1) {
-        console.log('es admin');
-        cookieService.set('rol', rest.rol_id);
-        return true;
-      }
-      else{
-        console.log('no es admin');
-        router.navigate(['/login']);
-        return false;
-      } 
-    });
-    return true;
+    if (cookieService.get('rol') === '1') {
+      return true;
+    }
+    router.navigate(['/login']);
+    return false;
   }
   else {
     router.navigate(['/login']);
     return false;
   }
-  router.navigate(['/login']);
-  return false;
 };
 
 
@@ -82,17 +71,9 @@ export const rolUser = (route: Route, segments: UrlSegment[]) => {
   const http = inject(HttpClient);
   const token = localStorage.getItem('token');
   if (authService.isLoggedIn() && token) { 
-    const token = cookieService.get('token');
-    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    http.post('http://127.0.0.1:8000/api/auth/me',{ headers: headers2 }).subscribe((rest: any) => {
-      console.log(rest);
-      if (rest && rest.rol_id === 1 ||rest && rest.rol_id === 3) {
-        cookieService.set('rol', rest.rol_id);
-        return true;
-      }
-      router.navigate(['/login']);
-      return false;    
-    });
+    if (cookieService.get('rol') === '2' || cookieService.get('rol') === '1'){
+      return true;
+    }
   }
   else {
     router.navigate(['/login']);
