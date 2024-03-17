@@ -31,6 +31,9 @@ import { MateriaPostComponent } from './Components/materias-post/materias-post.c
 import { MateriaEditComponent } from './Components/materias-edit/materias-edit.component';
 import { RolPostComponent } from './Components/rol-post/rol-post.component';
 import { RolEditComponent } from './Components/roles-edit/roles-edit.component';
+import { UsersComponent } from './Components/users/users.component';
+import { RolesComponent } from './Components/roles/roles.component';
+import { rolAdmin, rolUser, tokenauthGuard, verificaGuard } from './Guards/tokenauth.guard';
 
 export const routes: Routes = [
     {
@@ -71,6 +74,7 @@ export const routes: Routes = [
     {path: 'editar/:id',component: EstadoEditComponent, canActivate: [tokenauthGuard, verificaGuard, rolUser]},
     { path: 'escuelas/agregar', component: EscuelaPostComponent, canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
     { path: 'escuelas/editar/:id', component: EscuelaEditComponent, canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
+    
     { path: 'carreras/agregar', component: CarreraPostComponent },
     {path: 'carreras/editar/:id',component: CarreraEditComponent},
     

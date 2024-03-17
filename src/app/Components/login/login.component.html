@@ -52,9 +52,15 @@
               </div>
               <button type="submit" class="btn btn-block mb-4 text-white" style="background-color: brown;">Iniciar Sesión</button>
             </form>
+
+            <!-- mostrar el mensaje de error -->
+            <div *ngIf="errorMessage" class="alert alert-danger mb-4">
+              {{ errorMessage }}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserService } from '../../Services/user.service';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -18,10 +18,12 @@ export class LoginComponent {
   isProcessing=false;
   loginObj: Login;
   loginForm: FormGroup;
+  errorMessage: string = '';
 
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService, private formBuilder: FormBuilder) {
     this.loginObj = new Login();
+    this.errorMessage = '';
     this.loginForm = this.formBuilder.group({
       email: ['', [
         Validators.required,
@@ -57,10 +59,20 @@ export class LoginComponent {
         this.cookieService.set('token', res.access_token);
         this.router.navigate(['/codigo']);
       } else {
-        alert("error")
+        this.errorMessage = 'Error de autenticación';
       }
-    });
-  }
+      this.isProcessing = false;
+    },
+    (error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        this.errorMessage = error.error.error; 
+      } else {
+        this.errorMessage = 'Error en la solicitud';
+      }
+      this.isProcessing = false;
+    }
+  );
+}
 }
 
 export class Login{
