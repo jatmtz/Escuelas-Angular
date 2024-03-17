@@ -31,6 +31,8 @@ import { MateriaPostComponent } from './Components/materias-post/materias-post.c
 import { MateriaEditComponent } from './Components/materias-edit/materias-edit.component';
 import { RolPostComponent } from './Components/rol-post/rol-post.component';
 import { RolEditComponent } from './Components/roles-edit/roles-edit.component';
+import { RolesComponent } from './Components/roles/roles.component';
+import { UsersComponent } from './Components/users/users.component';
 
 export const routes: Routes = [
     {
@@ -49,6 +51,8 @@ export const routes: Routes = [
         component: LayoutComponent,
         children: [
 
+            { path: 'users', component:  UsersComponent},
+            { path: 'roles', component: RolesComponent },
             { path: 'alumnos', component: AlumnosComponent },
             { path: 'carreras', component: CarrerasComponent },
             { path: 'departamentos', component: DepartamentosComponent },
@@ -63,6 +67,8 @@ export const routes: Routes = [
             { path: 'materias', component: MateriasComponent },
             { path: 'profesores', component: DocentesComponent },
             { path: 'turnos', component: turnosComponent },
+            { path: 'roles', component: RolesComponent },
+            { path: 'users', component: UsersComponent },
         ]
     },
     { path: 'agregar', component: EstadoPostComponent },
