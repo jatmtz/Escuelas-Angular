@@ -25,7 +25,7 @@ export class CodigoComponent {
   }
 
   onCodigo() {
-    const token = localStorage.getItem('token');
+    const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     console.log(this.codigo);
     this.http.post('http://127.0.0.1:8000/api/auth/verify', { codigo: this.codigo }, { headers: headers2 }).subscribe((rest: any) => {

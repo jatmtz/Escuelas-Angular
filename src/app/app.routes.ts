@@ -31,8 +31,6 @@ import { MateriaPostComponent } from './Components/materias-post/materias-post.c
 import { MateriaEditComponent } from './Components/materias-edit/materias-edit.component';
 import { RolPostComponent } from './Components/rol-post/rol-post.component';
 import { RolEditComponent } from './Components/roles-edit/roles-edit.component';
-import { RolesComponent } from './Components/roles/roles.component';
-import { UsersComponent } from './Components/users/users.component';
 
 export const routes: Routes = [
     {
@@ -62,19 +60,17 @@ export const routes: Routes = [
             ] },
             { path: 'estados', component: EstadosComponent, children:[
                 
-            ]},
+            ], canActivate: [tokenauthGuard, verificaGuard]},
             { path: 'grupos', component: GruposComponent },
             { path: 'materias', component: MateriasComponent },
             { path: 'profesores', component: DocentesComponent },
             { path: 'turnos', component: turnosComponent },
-            { path: 'roles', component: RolesComponent },
-            { path: 'users', component: UsersComponent },
         ]
     },
-    { path: 'agregar', component: EstadoPostComponent },
-    {path: 'editar/:id',component: EstadoEditComponent},
-    { path: 'escuelas/agregar', component: EscuelaPostComponent},
-    { path: 'escuelas/editar/:id', component: EscuelaEditComponent},
+    { path: 'agregar', component: EstadoPostComponent, canActivate: [tokenauthGuard, verificaGuard, rolUser]},
+    {path: 'editar/:id',component: EstadoEditComponent, canActivate: [tokenauthGuard, verificaGuard, rolUser]},
+    { path: 'escuelas/agregar', component: EscuelaPostComponent, canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
+    { path: 'escuelas/editar/:id', component: EscuelaEditComponent, canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
     { path: 'carreras/agregar', component: CarreraPostComponent },
     {path: 'carreras/editar/:id',component: CarreraEditComponent},
     

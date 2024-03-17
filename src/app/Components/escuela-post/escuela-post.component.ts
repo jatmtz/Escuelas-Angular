@@ -1,10 +1,11 @@
 import { Component,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-escuela-post',
@@ -19,7 +20,7 @@ export class EscuelaPostComponent {
   estadoObj: Estado;
   estados: Estado[] = [];
   
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) {
     this.escuelaForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
@@ -72,7 +73,9 @@ export class EscuelaPostComponent {
     if (this.escuelaForm.invalid) {
       return; 
     }
-    this.http.post('http://' + window.location.hostname + ':8000/api/postEscuelas', this.escuelaObj).subscribe(
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://127.0.0.1:8000/api/auth/postEscuelas', this.escuelaObj, { headers: headers2 }).subscribe(
       (res: any) => {
         if (res.msg === "Escuela creada") {
           alert("Escuela creada");
@@ -89,7 +92,9 @@ export class EscuelaPostComponent {
   }
 
   obtenerEstados() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/getEstados').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getEstados', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Estados") {
         this.estados = res.data;
       } else {

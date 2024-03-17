@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} f
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-estado-edit',
@@ -22,7 +23,8 @@ export class EstadoEditComponent  implements OnInit{
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cookieService: CookieService
   ) {
     this.estadoForm = this.formBuilder.group({
       nombre: ['', [
@@ -49,9 +51,9 @@ export class EstadoEditComponent  implements OnInit{
   }
 
   editarEstado() {
-    const token = localStorage.getItem('token');
+    const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.put('http://' + window.location.hostname + ':8000/api/auth/putEstados/' + this.estado.id, this.estadoObj, { headers: headers2 } ).subscribe((res: any) => {
+    this.http.put('http://127.0.0.1:8000/api/auth/putEstados/' + this.estado.id, this.estadoObj, { headers: headers2 } ).subscribe((res: any) => {
       if (res.msg === "Estado actualizado") {
         alert("Estado actualizado");
         this.router.navigate(['/layout/estados']);
@@ -62,7 +64,7 @@ export class EstadoEditComponent  implements OnInit{
   }
 
   obtenerEstadoPorId(estadoId: any) {
-    const token = localStorage.getItem('token');
+    const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.get('http://' + window.location.hostname + ':8000/api/auth/showEstados/' + estadoId, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Estado") {

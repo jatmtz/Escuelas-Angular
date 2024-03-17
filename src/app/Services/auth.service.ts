@@ -11,6 +11,29 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
-    return !!token;
+    const token2 = this.cookieService.get('token');
+    if (!token2) {
+      console.log('no token');
+      return false;
+    }
+    if (this.tokenExpired(token2)) {
+      console.log('token expirado');
+      return false;
+    }
+    return !!token2;
   }
+  
+  private tokenExpired(token: string) {
+    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+    return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+  }
+
+  isLogout(): boolean {
+    this.cookieService.delete('token');
+    this.cookieService.delete('rol');
+    localStorage.removeItem('token');
+    return true;
+  }
+
+
 }
