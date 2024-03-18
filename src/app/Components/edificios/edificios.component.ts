@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink} from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-edificios',
@@ -15,17 +16,21 @@ import { MatIcon } from '@angular/material/icon';
 export class EdificiosComponent {
   edificioObj: Edificio;
   edificios: Edificio[] = [];
+  rol : string = '';
 
-  constructor(private http: HttpClient,private router: Router) {
+  constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
     this.edificioObj = new Edificio()
   }
 
   ngOnInit(): void {
+    this.rol = this.cookieService.get('rol');
     this.obtenerEdificios();
   }
 
   obtenerEdificios() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/getEdificios').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getEdificios', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Edificios") {
         this.edificios = res.data;
       } else {
@@ -40,8 +45,10 @@ export class EdificiosComponent {
   }
 
   eliminarEdificio(edificio: Edificio) {
-    if (confirm("¿Estás seguro de eliminar la edificio?")){
-    this.http.delete('http://' + window.location.hostname + ':8000/api/deleteEdificios/' + edificio.id).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    if(confirm("¿Estás seguro de eliminar el edificio?")){
+      this.http.delete('http://127.0.0.1:8000/api/auth/deleteEdificios/' + edificio.id, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Edificio eliminada") {
         this.obtenerEdificios();
       } else {

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink} from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-users',
@@ -15,17 +16,22 @@ import { MatIcon } from '@angular/material/icon';
 export class UsersComponent {
   userObj: User;
   users: User[] = [];
+  rol : string='';
 
-  constructor(private http: HttpClient,private router: Router) {
+  constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
     this.userObj = new User()
   }
 
   ngOnInit(): void {
+    console.log('Rol:', this.cookieService.get('rol'));
+    this.rol = this.cookieService.get('rol');
     this.getUsers();
   }
 
   getUsers() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/get').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getUsers', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Usuarios") {
         this.users = res.data;
       } else {
@@ -40,8 +46,10 @@ export class UsersComponent {
   }
 
   deleteUser(user: User) {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     if (confirm("¿Estás seguro de eliminar el usuario?")){
-      this.http.delete('http://' + window.location.hostname + ':8000/api/delete/' + user.id).subscribe((res: any) => {
+    this.http.delete('http://127.0.0.1:8000/api/auth/deleteUsers/' + user.id, { headers: headers2 }).subscribe((res: any) => {
         if (res.msg === "Usuario eliminado") {
           this.getUsers();
         } else {

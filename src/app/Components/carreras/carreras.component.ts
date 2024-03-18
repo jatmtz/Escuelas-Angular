@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink} from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-carreras',
@@ -15,21 +16,26 @@ import { MatIcon } from '@angular/material/icon';
 export class CarrerasComponent {
   carreraObj: Carrera;
   carreras: Carrera[] = [];
+  rol : string='';
 
-  constructor(private http: HttpClient,private router: Router) {
+  constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
     this.carreraObj = new Carrera()
   }
 
   ngOnInit(): void {
+    console.log('Rol:', this.cookieService.get('rol'));
+    this.rol = this.cookieService.get('rol');
     this.obtenerCarreras();
   }
 
   obtenerCarreras() {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.get('http://' + window.location.hostname + ':8000/api/getCarreras').subscribe((res: any) => {
       if (res.msg === "Carreras") {
         this.carreras = res.data;
       } else {
-        console.log("Error al obtener las escuelas:", res);
+        console.log("Error al obtener las varreras:", res);
       }
     });
   }
@@ -40,6 +46,8 @@ export class CarrerasComponent {
   }
 
   eliminarCarrera(carrera: Carrera) {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     if (confirm("¿Estás seguro de eliminar la carrera?")){
     this.http.delete('http://' + window.location.hostname + ':8000/api/deleteCarreras/' + carrera.id).subscribe((res: any) => {
       if (res.msg === "Carrera eliminada") {

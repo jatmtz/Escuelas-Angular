@@ -26,12 +26,15 @@ export class LayoutComponent implements OnInit {
   sideNav!: MatSidenav;
 
   estados:any[]=[];
+  rol : string='';
   constructor(private observer: BreakpointObserver, private http:HttpClient, 
     private authService: AuthService, private router: Router, private cookieService: CookieService){
 
   }
 
   ngOnInit(): void{
+    console.log('Rol:', this.cookieService.get('rol'));
+    this.rol = this.cookieService.get('rol');
     this.observer.observe(["(max-width: 1000px"])
     .subscribe((res) =>{
       if(res.matches){

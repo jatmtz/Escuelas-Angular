@@ -3,9 +3,10 @@
         <div class="row mt-3">
             <div class="col-md-4 offset-md-4">
                 <div class="d-grid mx-auto">
-                    <a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/edificios/agregar']">
+                    <h1 class="d-flex align-items-center justify-content-center">EDIFICIOS</h1>
+                    @if (rol == "1" || rol == "3"){<a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/edificios/agregar']">
                             <mat-icon>add_circle</mat-icon>AÑADIR
-                    </a>        
+                    </a>      }  
                 </div>
             </div>
         </div>
@@ -17,7 +18,7 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Escuela_ID</th>
-                        <th>Acciones</th>
+                        @if (rol == "1" || rol == "3") { <th>Acciones</th> }
                     </tr>
                     </thead>
                     <tbody>
@@ -25,7 +26,7 @@
                         <td>{{ edificio.id }}</td>
                         <td>{{ edificio.nombre }}</td>
                         <td>{{ edificio.escuela_id }}</td>
-                        <td>
+                        @if (rol == "1" || rol == "3"){<td>
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-outline-warning" (click)="editarEdificio(edificio)">
                                 <mat-icon>edit</mat-icon>
@@ -34,7 +35,7 @@
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
-                        </td>
+                        </td>}
                     </tr>
                     </tbody>
                 </table>

@@ -3,9 +3,10 @@
         <div class="row mt-3">
             <div class="col-md-4 offset-md-4">
                 <div class="d-grid mx-auto">
-                    <a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/users/agregar']">
+                    <h1  class="d-flex align-items-center justify-content-center">USUARIOS</h1>
+                    @if (rol == "1") { <a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/users/agregar']">
                             <mat-icon>add_circle</mat-icon>AÑADIR
-                    </a>        
+                    </a>        }
                 </div>
             </div>
         </div>
@@ -18,7 +19,7 @@
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Rol_id</th>
-                        <th>Acciones</th>
+                        @if (rol == "1") { <th>Acciones</th>}
                     </tr>
                     </thead>
                     <tbody>
@@ -27,7 +28,7 @@
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.rol_id }}</td>
-                        <td>
+                        @if (rol == "1") {<td>
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-outline-warning" (click)="editUser(user)">
                                 <mat-icon>edit</mat-icon>
@@ -36,7 +37,7 @@
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
-                        </td>
+                        </td>}
                     </tr>
                     </tbody>
                 </table>

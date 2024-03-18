@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink} from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -15,20 +16,24 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class turnosComponent implements OnInit{
   turnoObj: turno;
+  rol : string = '';
 
-  constructor(private http: HttpClient,private router: Router) {
+  constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
     this.turnoObj = new turno()
   }
 
   turnos: turno[] = [];
 
   ngOnInit(): void {
+    this.rol = this.cookieService.get('rol');
     this.obtenerturnos();
   }
 
   obtenerturnos() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/getTurnos').subscribe((res: any) => {
-      if (res.msg === "turnos") {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getTurnos', { headers: headers2 }).subscribe((res: any) => {
+      if (res.msg === "Turnos") {
         this.turnos = res.data;
       } else {
         console.log("Error al obtener los turnos:", res);
@@ -42,9 +47,11 @@ export class turnosComponent implements OnInit{
   }
 
   eliminarturno(turno: turno) {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     if(confirm("¿Estás seguro de eliminar el turno?")){
-      this.http.delete('http://' + window.location.hostname + ':8000/api/deleteTurnos/' + turno.id).subscribe((res: any) => {
-      if (res.msg === "turno eliminado") {
+      this.http.delete('http://127.0.0.1:8000/api/auth/deleteTurnos/' + turno.id, { headers: headers2 }).subscribe((res: any) => {
+      if (res.msg === "Turno eliminado") {
         this.obtenerturnos();
       } else {
         console.log("Error al eliminar el turno:", res);

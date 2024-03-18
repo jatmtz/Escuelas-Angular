@@ -3,9 +3,10 @@
         <div class="row mt-3">
             <div class="col-md-4 offset-md-4">
                 <div class="d-grid mx-auto">
-                    <a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/grupos/agregar']">
+                    <h1 class="d-flex align-items-center justify-content-center">GRUPOS</h1>
+                    @if (rol == "1") { <a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/grupos/agregar']">
                             <mat-icon>add_circle</mat-icon>AÑADIR
-                    </a>        
+                    </a>        }
                 </div>
             </div>
         </div>
@@ -19,7 +20,7 @@
                         <th>Clave</th>
                         <th>Carrera_ID</th>
                         <th>Turno_ID</th>
-                        <th>Acciones</th>
+                        @if (rol == "1") { <th>Acciones</th>}
                     </tr>
                     </thead>
                     <tbody>
@@ -29,7 +30,7 @@
                         <td>{{ grupo.clave }}</td>
                         <td>{{ grupo.carrera_id }}</td>
                         <td>{{ grupo.turno_id }}</td>
-                        <td>
+                        @if (rol == "1") {<td>
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-outline-warning" (click)="editarGrupo(grupo)">
                                 <mat-icon>edit</mat-icon>
@@ -38,7 +39,7 @@
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
-                        </td>
+                        </td>}
                     </tr>
                     </tbody>
                 </table>

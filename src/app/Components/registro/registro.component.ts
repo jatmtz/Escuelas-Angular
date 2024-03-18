@@ -42,7 +42,7 @@ export class RegistroComponent {
             } else if (errorMessageData === '{"password":["The password must be at least 8 characters."]}') {
               this.errorMessage = 'La contraseña debe tener al menos 8 caracteres';
             } else {
-              this.errorMessage = 'Datos incorrectos: ';
+              this.errorMessage = 'Datos incorrectos';
             }
           } else {
             this.errorMessage = 'Error en la solicitud';

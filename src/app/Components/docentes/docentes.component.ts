@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink} from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-docentes',
@@ -14,19 +15,24 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class DocentesComponent {
   docenteObj: Docente;
+  rol : string='';
 
-  constructor(private http: HttpClient,private router: Router) {
+  constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
     this.docenteObj = new Docente()
   }
 
   docentes: Docente[] = [];
 
   ngOnInit(): void {
+    console.log('Rol:', this.cookieService.get('rol'));
+    this.rol = this.cookieService.get('rol');
     this.obtenerDocentes();
   }
 
   obtenerDocentes() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/getDocentes').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getDocentes', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Docentes") {
         this.docentes = res.data;
       } else {
@@ -41,8 +47,10 @@ export class DocentesComponent {
   }
 
   eliminarDocente(docente: Docente) {
-    if(confirm("¿Estás seguro de eliminar el docente?")){
-      this.http.delete('http://' + window.location.hostname + ':8000/api/deleteDocentes/' + docente.id).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    if (confirm("¿Estás seguro de eliminar al docente?")){
+    this.http.delete('http://127.0.0.1:8000/api/auth/deleteDocentes/' + docente.id, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Docente eliminado") {
         this.obtenerDocentes();
       } else {

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink} from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-grupos',
@@ -15,17 +16,22 @@ import { MatIcon } from '@angular/material/icon';
 export class GruposComponent {
   grupoObj: Grupo;
   grupos: Grupo[] = [];
+  rol : string='';
 
-  constructor(private http: HttpClient,private router: Router) {
+  constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
     this.grupoObj = new Grupo()
   }
 
   ngOnInit(): void {
+    console.log('Rol:', this.cookieService.get('rol'));
+    this.rol = this.cookieService.get('rol');
     this.obtenerGrupos();
   }
 
   obtenerGrupos() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/getGrupos').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getGrupos', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Grupos") {
         this.grupos = res.data;
       } else {
@@ -40,8 +46,10 @@ export class GruposComponent {
   }
 
   eliminarGrupo(grupo: Grupo) {
-    if (confirm("¿Estás seguro de eliminar la grupo?")){
-    this.http.delete('http://' + window.location.hostname + ':8000/api/deleteGrupos/' + grupo.id).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    if (confirm("¿Estás seguro de eliminar el grupo?")){
+    this.http.delete('http://127.0.0.1:8000/api/auth/deleteGrupos/' + grupo.id, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "grupo eliminada") {
         this.obtenerGrupos();
       } else {

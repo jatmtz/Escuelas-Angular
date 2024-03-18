@@ -34,6 +34,13 @@ import { RolEditComponent } from './Components/roles-edit/roles-edit.component';
 import { UsersComponent } from './Components/users/users.component';
 import { RolesComponent } from './Components/roles/roles.component';
 import { rolAdmin, rolUser, tokenauthGuard, verificaGuard } from './Guards/tokenauth.guard';
+import { DepartamentoPostComponent } from './Components/departamento-post/departamento-post.component';
+import { DepartamentoEditComponent } from './Components/departamento-edit/departamento-edit.component';
+import { UserPostComponent } from './Components/user-post/user-post.component';
+import { UserEditComponent } from './Components/user-edit/user-edit.component';
+import { LogsComponent } from './Components/logs/logs.component';
+import { AlumnoPostComponent } from './Components/alumno-post/alumno-post.component';
+import { AlumnoEditComponent } from './Components/alumno-edit/alumno-edit.component';
 
 export const routes: Routes = [
     {
@@ -63,28 +70,38 @@ export const routes: Routes = [
             ] },
             { path: 'estados', component: EstadosComponent, children:[
                 
-            ], canActivate: [tokenauthGuard, verificaGuard]},
+            ]},
             { path: 'grupos', component: GruposComponent },
             { path: 'materias', component: MateriasComponent },
             { path: 'profesores', component: DocentesComponent },
             { path: 'turnos', component: turnosComponent },
-        ]
+            { path: 'logs', component: LogsComponent },
+        ],  /*canActivate: [tokenauthGuard, verificaGuard]*/
     },
     { path: 'agregar', component: EstadoPostComponent, canActivate: [tokenauthGuard, verificaGuard, rolUser]},
     {path: 'editar/:id',component: EstadoEditComponent, canActivate: [tokenauthGuard, verificaGuard, rolUser]},
     { path: 'escuelas/agregar', component: EscuelaPostComponent, canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
     { path: 'escuelas/editar/:id', component: EscuelaEditComponent, canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
+
+    { path: 'alumnos/agregar', component: AlumnoPostComponent },
+    {path: 'alumnos/editar/:id',component: AlumnoEditComponent},
     
     { path: 'carreras/agregar', component: CarreraPostComponent },
     {path: 'carreras/editar/:id',component: CarreraEditComponent},
+
+    { path: 'users/agregar', component: UserPostComponent },
+    {path: 'users/editar/:id',component: UserEditComponent},
+
+    { path: 'departamentos/agregar', component: DepartamentoPostComponent },
+    {path: 'departamentos/editar/:id',component: DepartamentoEditComponent},
     
     { path: 'docentes/agregar', component: DocentePostComponent },
     {path: 'docentes/editar/:id',component: DocenteEditComponent },
 
-    { path: 'edificios/agregar', component: EdificioPostComponent },
+    { path: 'edificios/agregar', component: EdificioPostComponent }, /*CATALOGO*/
     {path: 'edificios/editar/:id',component: EdificioEditComponent },
 
-    { path: 'turnos/agregar', component: turnoPostComponent },
+    { path: 'turnos/agregar', component: turnoPostComponent }, /*CATALOGO*/
     {path: 'turnos/editar/:id',component: turnoEditComponent },
 
     { path: 'grupos/agregar', component: GrupoPostComponent },

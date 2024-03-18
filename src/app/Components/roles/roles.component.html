@@ -3,9 +3,7 @@
         <div class="row mt-3">
             <div class="col-md-4 offset-md-4">
                 <div class="d-grid mx-auto">
-                    <a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/agregar']">
-                            <mat-icon>add_circle</mat-icon>AÑADIR
-                    </a>        
+                    <h1 class="d-flex align-items-center justify-content-center">ROLES</h1>     
                 </div>
             </div>
         </div>
@@ -16,23 +14,14 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th>Acciones</th>
+                        
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let rol of roles">
                         <td>{{ rol.id }}</td>
                         <td>{{ rol.name }}</td>
-                        <td>
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-warning" (click)="editarRol(rol)">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button type="button" class="btn btn-outline-danger" (click)="eliminarRol(rol)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                        </td>
+                        
                     </tr>
                     </tbody>
                 </table>
