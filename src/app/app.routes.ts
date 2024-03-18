@@ -76,7 +76,7 @@ export const routes: Routes = [
             { path: 'profesores', component: DocentesComponent },
             { path: 'turnos', component: turnosComponent },
             { path: 'logs', component: LogsComponent },
-        ],  /*canActivate: [tokenauthGuard, verificaGuard]*/
+        ],  canActivate: [tokenauthGuard, verificaGuard]
     },
     { path: 'agregar', component: EstadoPostComponent, canActivate: [tokenauthGuard, verificaGuard, rolUser]},
     {path: 'editar/:id',component: EstadoEditComponent, canActivate: [tokenauthGuard, verificaGuard, rolUser]},
