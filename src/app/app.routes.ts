@@ -83,35 +83,35 @@ export const routes: Routes = [
     { path: 'escuelas/agregar', component: EscuelaPostComponent, canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
     { path: 'escuelas/editar/:id', component: EscuelaEditComponent, canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
 
-    { path: 'alumnos/agregar', component: AlumnoPostComponent },
-    {path: 'alumnos/editar/:id',component: AlumnoEditComponent},
+    { path: 'alumnos/agregar', component: AlumnoPostComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
+    {path: 'alumnos/editar/:id',component: AlumnoEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
     
-    { path: 'carreras/agregar', component: CarreraPostComponent },
-    {path: 'carreras/editar/:id',component: CarreraEditComponent},
+    { path: 'carreras/agregar', component: CarreraPostComponent ,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
+    {path: 'carreras/editar/:id',component: CarreraEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
 
-    { path: 'users/agregar', component: UserPostComponent },
-    {path: 'users/editar/:id',component: UserEditComponent},
+    { path: 'users/agregar', component: UserPostComponent ,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
+    {path: 'users/editar/:id',component: UserEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
 
-    { path: 'departamentos/agregar', component: DepartamentoPostComponent },
-    {path: 'departamentos/editar/:id',component: DepartamentoEditComponent},
+    { path: 'departamentos/agregar', component: DepartamentoPostComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
+    {path: 'departamentos/editar/:id',component: DepartamentoEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
     
-    { path: 'docentes/agregar', component: DocentePostComponent },
-    {path: 'docentes/editar/:id',component: DocenteEditComponent },
+    { path: 'docentes/agregar', component: DocentePostComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
+    {path: 'docentes/editar/:id',component: DocenteEditComponent ,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
 
-    { path: 'edificios/agregar', component: EdificioPostComponent }, /*CATALOGO*/
-    {path: 'edificios/editar/:id',component: EdificioEditComponent },
+    { path: 'edificios/agregar', component: EdificioPostComponent,canActivate: [tokenauthGuard, verificaGuard, rolUser] }, /*CATALOGO*/
+    {path: 'edificios/editar/:id',component: EdificioEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolUser] },
 
-    { path: 'turnos/agregar', component: turnoPostComponent }, /*CATALOGO*/
-    {path: 'turnos/editar/:id',component: turnoEditComponent },
+    { path: 'turnos/agregar', component: turnoPostComponent,canActivate: [tokenauthGuard, verificaGuard, rolUser] }, /*CATALOGO*/
+    {path: 'turnos/editar/:id',component: turnoEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolUser] },
 
-    { path: 'grupos/agregar', component: GrupoPostComponent },
-    {path: 'grupos/editar/:id',component: GruposEditComponent },
+    { path: 'grupos/agregar', component: GrupoPostComponent ,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
+    {path: 'grupos/editar/:id',component: GruposEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
     
-    { path: 'materias/agregar', component: MateriaPostComponent },
-    {path: 'materias/editar/:id',component: MateriaEditComponent },
+    { path: 'materias/agregar', component: MateriaPostComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
+    {path: 'materias/editar/:id',component: MateriaEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
 
-    { path: 'roles/agregar', component: RolPostComponent },
-    {path: 'roles/editar/:id',component: RolEditComponent },
+    { path: 'roles/agregar', component: RolPostComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
+    {path: 'roles/editar/:id',component: RolEditComponent ,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},
     {
         path: '**',
         redirectTo: 'login',
