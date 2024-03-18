@@ -38,9 +38,9 @@ import { DepartamentoPostComponent } from './Components/departamento-post/depart
 import { DepartamentoEditComponent } from './Components/departamento-edit/departamento-edit.component';
 import { UserPostComponent } from './Components/user-post/user-post.component';
 import { UserEditComponent } from './Components/user-edit/user-edit.component';
-import { LogsComponent } from './Components/logs/logs.component';
 import { AlumnoPostComponent } from './Components/alumno-post/alumno-post.component';
 import { AlumnoEditComponent } from './Components/alumno-edit/alumno-edit.component';
+import { HistorialComponent } from './Components/historial/historial.component';
 
 export const routes: Routes = [
     {
@@ -75,7 +75,7 @@ export const routes: Routes = [
             { path: 'materias', component: MateriasComponent },
             { path: 'profesores', component: DocentesComponent },
             { path: 'turnos', component: turnosComponent },
-            { path: 'logs', component: LogsComponent },
+            { path: 'historial', component: HistorialComponent },
         ],  canActivate: [tokenauthGuard, verificaGuard]
     },
     { path: 'agregar', component: EstadoPostComponent, canActivate: [tokenauthGuard, verificaGuard, rolUser]},
