@@ -76,8 +76,8 @@ export class DepartamentoEditComponent {
   editarDepartamento() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.put('http://127.0.0.0.1:8000/api/auth/putDepartamentos/' + this.departamentoObj.id, this.departamentoObj, { headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "Departamento actualizada") {
+    this.http.put('http://127.0.0.1:8000/api/auth/putDepartamentos/' + this.departamentoObj.id, this.departamentoObj, { headers: headers2 }).subscribe((res: any) => {
+      if (res.msg === "Departamento actualizado") {
         alert("Departamento actualizada");
         this.router.navigate(['/layout/departamentos']);
       } else {
@@ -89,7 +89,7 @@ export class DepartamentoEditComponent {
   obtenerEscuelas() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.0.1:8000/api/auth/getEscuelas', { headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://127.0.0.1:8000/api/auth/getEscuelas', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Escuelas") {
         this.escuelas = res.data;
       } else {
@@ -101,7 +101,7 @@ export class DepartamentoEditComponent {
   obtenerDepartamentoPorId(departamentoId: any) {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.0.1:8000/api/showDepartamentos/' + departamentoId, { headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://127.0.0.1:8000/api/auth/showDepartamentos/' + departamentoId, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Departamento") {
         this.departamentoObj = res.data;
         this.departamentoObj.id = this.departamentoObj.id;

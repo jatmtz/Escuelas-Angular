@@ -50,7 +50,7 @@ export class AlumnosComponent {
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     if (confirm("¿Estás seguro de eliminar la alumno?")){
     this.http.delete('http://127.0.0.1:8000/api/auth/deleteAlumnos/' + alumno.id, { headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "Alumno eliminada") {
+      if (res.msg === "Alumno eliminado") {
         this.obtenerAlumnos();
       } else {
         console.log("Error al eliminar la alumno:", res);

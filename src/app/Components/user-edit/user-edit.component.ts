@@ -81,8 +81,8 @@ export class UserEditComponent  implements OnInit{
   editarUser() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.put('http://127.0.0.1:8000/api/auth/putUsers/' + this.user.id, this.userObj, { headers: headers2 } ).subscribe((res: any) => {
-      if (res.msg === "User actualizado") {
+    this.http.put('http://127.0.0.1:8000/api/auth/put/' + this.user.id, this.userObj, { headers: headers2 } ).subscribe((res: any) => {
+      if (res.msg === "Usuario actualizado") {
         alert("User actualizado");
         this.router.navigate(['/layout/users']);
       } else {
@@ -94,8 +94,8 @@ export class UserEditComponent  implements OnInit{
   obtenerUserPorId(userId: any) {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://' + window.location.hostname + ':8000/api/auth/showUsers/' + userId, { headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "User") {
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/show/' + userId, { headers: headers2 }).subscribe((res: any) => {
+      if (res.msg === "Usuario") {
         this.user = res.data;
         this.userObj.id = this.user.id;
         this.userObj.name = this.user.name;

@@ -23,7 +23,6 @@ export class MateriasComponent {
   }
 
   ngOnInit(): void {
-    console.log('Rol:', this.cookieService.get('rol'));
     this.rol = this.cookieService.get('rol');
     this.obtenerMaterias();
   }

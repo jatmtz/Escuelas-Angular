@@ -44,6 +44,15 @@ export class CodigoComponent {
     const hederss = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.post('http://127.0.0.1:8000/api/auth/me', this.codigo, { headers: hederss }).subscribe((res: any) => {
       console.log(res);
+    
+      if (res && res.verificado === 1) {
+        this.cookieService.delete('rol');
+        this.cookieService.set('rol', res.rol_id);
+        return true;
+      }
+      this.router.navigate(['/codigo']);
+      return false;
+    
     }
     );
     this.isProcessing = false;

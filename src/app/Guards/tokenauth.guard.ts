@@ -26,8 +26,6 @@ export const verificaGuard: CanActivateFn = (route, state) => {
   if (authService.isLoggedIn() && token) { 
     const headerss = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     http.post('http://127.0.0.1:8000/api/auth/me', {}, { headers: headerss }).subscribe((rest: any) => {
-      console.log(headerss);
-      console.log(rest);
       if (rest && rest.verificado === 1) {
         cookieService.delete('rol');
         cookieService.set('rol', rest.rol_id);

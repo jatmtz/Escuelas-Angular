@@ -28,7 +28,7 @@ export class DepartamentosComponent {
   }
 
   obtenerDepartamentos() {
-    const token = this.cookieService.get('token');
+    const token = this.cookieService.get('token'); 
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.get('http://127.0.0.1:8000/api/auth/getDepartamentos', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Departamentos") {
@@ -49,7 +49,7 @@ export class DepartamentosComponent {
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     if(confirm("¿Estás seguro de eliminar el departamento?")){
       this.http.delete('http://127.0.0.1:8000/api/auth/deleteDepartamentos/' + departamento.id, { headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "Departamento eliminada") {
+      if (res.msg === "Departamento eliminado") {
         this.obtenerDepartamentos();
       } else {
         console.log("Error al eliminar la departamento:", res);

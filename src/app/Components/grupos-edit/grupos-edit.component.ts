@@ -31,26 +31,22 @@ export class GruposEditComponent {
     this.grupoForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(2),
         Validators.maxLength(50),
-        Validators.pattern(/^[a-zA-ZñÑ\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑ0-9\s]+$/)
       ]],
       clave: ['', [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50),
-        Validators.pattern(/^[a-zA-ZñÑ\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑ0-9\s]+$/)
       ]],
       carrera_id: ['', [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]],
       turno_id: ['', [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]]
     });
@@ -63,25 +59,22 @@ export class GruposEditComponent {
     this.grupoForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(2),
         Validators.maxLength(50),
-        Validators.pattern(/^[a-zA-ZñÑ\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑ0-9\s]+$/)
       ]],
       clave: ['', [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(10)
+        Validators.maxLength(10),
+        Validators.pattern(/^[a-zA-ZñÑ0-9\s]+$/)
       ]],
       carrera_id: ['', [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]],
       turno_id: ['', [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]]
     });
@@ -94,7 +87,7 @@ export class GruposEditComponent {
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.put('http://127.0.0.1:8000/api/auth/putGrupos/' + this.grupoObj.id, this.grupoObj, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Grupo actualizado") {
-        alert("Grupo actualizada");
+        alert("Grupo actualizado");
         this.router.navigate(['/layout/grupos']);
       } else {
         console.log("Error al actualizar la grupo:", res);
@@ -129,8 +122,8 @@ export class GruposEditComponent {
   obtenerGrupoPorId(grupoId: any) {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.1:8000/api/showGrupos/' + grupoId,{ headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "Grupos") {
+    this.http.get('http://127.0.0.1:8000/api/auth/showGrupos/' + grupoId,{ headers: headers2 }).subscribe((res: any) => {
+      if (res.msg === "Grupo") {
         this.grupoObj = res.data;
         this.grupoObj.id = this.grupoObj.id;
         this.grupoObj.nombre = this.grupoObj.nombre;

@@ -49,7 +49,7 @@ export class EdificiosComponent {
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     if(confirm("¿Estás seguro de eliminar el edificio?")){
       this.http.delete('http://127.0.0.1:8000/api/auth/deleteEdificios/' + edificio.id, { headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "Edificio eliminada") {
+      if (res.msg === "Edificio eliminado") {
         this.obtenerEdificios();
       } else {
         console.log("Error al eliminar la edificio:", res);

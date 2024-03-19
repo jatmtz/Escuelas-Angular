@@ -84,10 +84,11 @@ export class GrupoPostComponent {
     }
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    console.log(this.grupoObj);
     this.http.post('http://' + window.location.hostname + ':8000/api/auth/postGrupos', this.grupoObj,{ headers: headers2 }).subscribe(
       (res: any) => {
         if (res.msg === "Grupo creado") {
-          alert("Grupo creada");
+          alert("Grupo creado");
           this.router.navigate(['layout/grupos']);
         } else {
           alert("Error al crear la grupo");

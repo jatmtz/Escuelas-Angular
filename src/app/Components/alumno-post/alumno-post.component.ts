@@ -103,8 +103,7 @@ export class AlumnoPostComponent {
         Validators.pattern(/^[0-9]+$/)
       ]]
     });
-    this.obtenerGrupos(0);
-    this.obtenerCarreras()
+    this.obtenerCarreras();
   }
   
 
@@ -116,7 +115,7 @@ export class AlumnoPostComponent {
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.post('http://127.0.0.1:8000/api/auth/postAlumnos', this.alumnoObj, { headers: headers2 }).subscribe(
       (res: any) => {
-        if (res.msg === "Alumno creada") {
+        if (res.msg === "Alumno creado") {
           alert("Alumno creada");
           this.router.navigate(['layout/alumnos']);
         } else {
@@ -134,7 +133,7 @@ export class AlumnoPostComponent {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.get('http://127.0.0.1:8000/api/auth/GruposCarrera/'+carrera_id, { headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "Grupos") {
+      if (res.msg === "Grupo") {
         this.grupos = res.data;
       } else {
         console.log("Error al obtener los grupos:", res);
@@ -145,9 +144,10 @@ export class AlumnoPostComponent {
   obtenerCarreras() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.1:8000/api/auth/getCarreras', { headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/getCarreras', { headers: headers2 }).subscribe((res: any) => {
+      console.log(res);
       if (res.msg === "Carreras") {
-        this.grupos = res.data;
+        this.carreras = res.data;
       } else {
         console.log("Error al obtener las carreras:", res);
       }

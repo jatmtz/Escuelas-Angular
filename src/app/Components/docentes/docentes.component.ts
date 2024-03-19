@@ -42,7 +42,7 @@ export class DocentesComponent {
   }
 
   editarDocente(docente: Docente) {
-    this.router.navigate(['/editar/', docente.id]);
+    this.router.navigate(['/docentes/editar/', docente.id]);
     console.log('Editar docente:', docente);
   }
 

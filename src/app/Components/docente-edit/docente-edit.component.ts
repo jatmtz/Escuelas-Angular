@@ -90,7 +90,7 @@ export class DocenteEditComponent  implements OnInit{
     this.http.put('http://' + window.location.hostname + ':8000/api/auth/putDocentes/' + this.docente.id, this.docenteObj, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Docente actualizado") {
         alert("Docente actualizado");
-        this.router.navigate(['/layout/docentes']);
+        this.router.navigate(['/layout/profesores']);
       } else {
         console.log("Error al actualizar el docente:", res);
       }

@@ -110,16 +110,15 @@ export class AlumnoEditComponent {
         Validators.pattern(/^[0-9]+$/)
       ]]
     });
-    this.obtenerGrupos(0);
-    this.obtenerCarreras()
+    this.obtenerCarreras();
   }
-  
+   
 
   editarAlumno() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.put('http://127.0.0.1:8000/api/putAlumnos/' + this.alumnoObj.id, this.alumnoObj, { headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "Alumno actualizada") {
+    this.http.put('http://127.0.0.1:8000/api/auth/putAlumnos/' + this.alumnoObj.id, this.alumnoObj, { headers: headers2 }).subscribe((res: any) => {
+      if (res.msg === "Alumno actualizado") {
         alert("Alumno actualizada");
         this.router.navigate(['/layout/alumnos']);
       } else {
@@ -132,7 +131,7 @@ export class AlumnoEditComponent {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.get('http://127.0.0.1:8000/api/auth/GruposCarrera/'+carrera_id, { headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "Grupos") {
+      if (res.msg === "Grupo") {
         this.grupos = res.data;
       } else {
         console.log("Error al obtener los grupos:", res);
@@ -143,9 +142,9 @@ export class AlumnoEditComponent {
   obtenerCarreras() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.1:8000/api/auth/getCarreras', { headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/getCarreras', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carreras") {
-        this.grupos = res.data;
+        this.carreras = res.data;
       } else {
         console.log("Error al obtener las carreras:", res);
       }
@@ -155,7 +154,7 @@ export class AlumnoEditComponent {
   obtenerAlumnoPorId(alumnoId: any) {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.1:8000/api/showAlumnos/' + alumnoId, { headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://127.0.0.1:8000/api/auth/showAlumnos/' + alumnoId, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Alumno") {
         this.alumnoObj = res.data;
         this.alumnoObj.id = this.alumnoObj.id;
@@ -165,6 +164,7 @@ export class AlumnoEditComponent {
         this.alumnoObj.matricula = this.alumnoObj.matricula;
         this.alumnoObj.carrera_id = this.alumnoObj.carrera_id;
         this.alumnoObj.grupo_id = this.alumnoObj.grupo_id;
+        this.obtenerGrupos(this.alumnoObj.carrera_id);
       } else {
         console.log("Error al obtener los detalles de la alumno:", res);
       }

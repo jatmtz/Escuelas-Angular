@@ -64,9 +64,9 @@ export class UserPostComponent {
     }
     const token = this.cookieService.get('token');
     const hederss = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.post('http://127.0.0.1:8000/api/auth/postUsers', this.userObj, { headers: hederss }).subscribe(
+    this.http.post('http://127.0.0.1:8000/api/auth/post', this.userObj, { headers: hederss }).subscribe(
       (res: any) => {
-        if (res.msg === "User creado") {
+        if (res.msg === "Usuario creado") {
           alert("User creado");
           this.router.navigate(['layout/users']);
         } else {

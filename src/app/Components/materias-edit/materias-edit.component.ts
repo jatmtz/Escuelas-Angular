@@ -77,7 +77,7 @@ export class MateriaEditComponent {
   editarMateria() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.put('http://127.0.0.0.1:8000/api/auth/putMaterias/' + this.materiaObj.id, this.materiaObj,{ headers: headers2 }).subscribe((res: any) => {
+    this.http.put('http://127.0.0.1:8000/api/auth/putMaterias/' + this.materiaObj.id, this.materiaObj,{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Materia actualizada") {
         alert("Materia actualizada");
         this.router.navigate(['/layout/materias']);
@@ -90,7 +90,7 @@ export class MateriaEditComponent {
   obtenerCarreras() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.0.1:8000/api/auth/getCarreras',{ headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://127.0.0.1:8000/api/auth/getCarreras',{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carreras") {
         this.carreras = res.data;
       } else {
@@ -102,7 +102,7 @@ export class MateriaEditComponent {
   obtenerMateriaPorId(materiaId: any) {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.0.1:8000/api/auth/showMaterias/' + materiaId,{ headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://127.0.0.1:8000/api/auth/showMaterias/' + materiaId,{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Materia") {
         this.materiaObj = res.data;
         this.materiaObj.id = this.materiaObj.id;

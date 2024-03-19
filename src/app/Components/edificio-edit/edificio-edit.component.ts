@@ -66,9 +66,9 @@ export class EdificioEditComponent {
   editarEdificio() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.put('http://127.0.0.0.1:8000/api/auth/putEdificios/' + this.edificioObj.id, this.edificioObj, { headers: headers2 }).subscribe((res: any) => {
-      if (res.msg === "Edificio actualizada") {
-        alert("Edificio actualizada");
+    this.http.put('http://127.0.0.1:8000/api/auth/putEdificios/' + this.edificioObj.id, this.edificioObj, { headers: headers2 }).subscribe((res: any) => {
+      if (res.msg === "Edificio actualizado") {
+        alert("Edificio actualizado");
         this.router.navigate(['/layout/edificios']);
       } else {
         console.log("Error al actualizar la edificio:", res);
@@ -79,7 +79,7 @@ export class EdificioEditComponent {
   obtenerEscuelas() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.0.1:8000/api/auth/getEscuelas', { headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://127.0.0.1:8000/api/auth/getEscuelas', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Escuelas") {
         this.escuelas = res.data;
       } else {
@@ -91,7 +91,7 @@ export class EdificioEditComponent {
   obtenerEdificioPorId(edificioId: any) {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.0.1:8000/api/auth/showEdificios/' + edificioId,{ headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://127.0.0.1:8000/api/auth/showEdificios/' + edificioId,{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Edificio") {
         this.edificioObj = res.data;
         this.edificioObj.id = this.edificioObj.id;

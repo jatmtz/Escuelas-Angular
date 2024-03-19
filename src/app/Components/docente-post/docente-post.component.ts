@@ -82,11 +82,11 @@ export class DocentePostComponent {
     }
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.post('http://' + window.location.hostname + ':8000/api/postDocentes', this.docenteObj, { headers: headers2 }).subscribe(
+    this.http.post('http://' + window.location.hostname + ':8000/api/auth/postDocentes', this.docenteObj, { headers: headers2 }).subscribe(
       (res: any) => {
         if (res.msg === "Docente creado") {
           alert("Docente creado");
-          this.router.navigate(['layout/docentes']);
+          this.router.navigate(['layout/profesores']);
         } else {
           alert("Error al crear el docente");
           console.log("Error al crear el docente:", res);

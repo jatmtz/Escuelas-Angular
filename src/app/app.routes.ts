@@ -41,6 +41,10 @@ import { UserEditComponent } from './Components/user-edit/user-edit.component';
 import { AlumnoPostComponent } from './Components/alumno-post/alumno-post.component';
 import { AlumnoEditComponent } from './Components/alumno-edit/alumno-edit.component';
 import { HistorialComponent } from './Components/historial/historial.component';
+import { DocenteMateriaPostComponent } from './Components/docente-materia-post/docente-materia-post.component';
+import { DocenteMateriaEditComponent } from './Components/docente-materia-edit/docente-materia-edit.component';
+import { DocenteMateriaComponent } from './Components/docente-materia/docente-materia.component';
+
 
 export const routes: Routes = [
     {
@@ -76,6 +80,7 @@ export const routes: Routes = [
             { path: 'profesores', component: DocentesComponent },
             { path: 'turnos', component: turnosComponent },
             { path: 'historial', component: HistorialComponent },
+            { path: 'docenteMateria', component: DocenteMateriaComponent}
         ],  canActivate: [tokenauthGuard, verificaGuard]
     },
     { path: 'agregar', component: EstadoPostComponent, canActivate: [tokenauthGuard, verificaGuard, rolUser]},
@@ -109,6 +114,9 @@ export const routes: Routes = [
     
     { path: 'materias/agregar', component: MateriaPostComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
     {path: 'materias/editar/:id',component: MateriaEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
+
+    { path: 'docenteMateria/agregar', component: DocenteMateriaPostComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
+    {path: 'docenteMateria/editar/:id',component: DocenteMateriaEditComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
 
     { path: 'roles/agregar', component: RolPostComponent,canActivate: [tokenauthGuard, verificaGuard, rolAdmin] },
     {path: 'roles/editar/:id',component: RolEditComponent ,canActivate: [tokenauthGuard, verificaGuard, rolAdmin]},

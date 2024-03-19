@@ -33,7 +33,6 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void{
-    console.log('Rol:', this.cookieService.get('rol'));
     this.rol = this.cookieService.get('rol');
     this.observer.observe(["(max-width: 1000px"])
     .subscribe((res) =>{

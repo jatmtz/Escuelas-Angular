@@ -9,12 +9,12 @@
                   <h1 class="display-4 text-center">Agregar Grupo</h1>
                   <div class="form-check mb-3">
                     <label for="nombre">Nombre:</label>
-                    <input formControlName="nombre" id="nombre" name="nombre" class="form-control" [class.is-invalid]="grupoForm.get('nombre')?.invalid && grupoForm.get('nombre')?.touched" placeholder="Ej. 4D" required minlength="3" [(ngModel)]="grupoObj.nombre">
+                    <input formControlName="nombre" id="nombre" name="nombre" class="form-control" [class.is-invalid]="grupoForm.get('nombre')?.invalid && grupoForm.get('nombre')?.touched" placeholder="Ej. 4D" required minlength="2" [(ngModel)]="grupoObj.nombre">
                     <div class="invalid-feedback" *ngIf="grupoForm.get('nombre')?.hasError('required') && grupoForm.get('nombre')?.touched">
                       El nombre es obligatorio.
                     </div>
                     <div class="invalid-feedback" *ngIf="grupoForm.get('nombre')?.hasError('minlength') && grupoForm.get('nombre')?.touched">
-                      El nombre debe tener al menos 3 caracteres.
+                      El nombre debe tener al menos 2 caracteres.
                     </div>
                     <div class="invalid-feedback" *ngIf="grupoForm.get('nombre')?.hasError('maxlength') && grupoForm.get('nombre')?.touched">
                       El nombre no debe exceder los 50 caracteres.

@@ -11,7 +11,7 @@
             @if (rol == "1"){<mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/users">
                 Usuarios
             </mat-list-item>}
-            @if (rol == "1"){<mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/roles">
+            @if (rol == "0"){<mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/roles">
                 Roles
             </mat-list-item>}
             @if (rol == "1"){<mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/historial">
@@ -46,6 +46,9 @@
             </mat-list-item>
             <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/departamentos">
                 Departamentos
+            </mat-list-item>
+            <mat-list-item (click)="sideNav.mode === 'over' && sideNav.toggle()" routerLink="/layout/docenteMateria">
+                Docente Materia
             </mat-list-item>
             <mat-list-item (click)="logout()">
                 Salir <mat-icon>exit_to_app</mat-icon>

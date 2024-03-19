@@ -1,0 +1,45 @@
+<section>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-4 offset-md-4">
+                <div class="d-grid mx-auto">
+                    <h1 class="d-flex align-items-center justify-content-center">Docente Materias</h1>
+                    @if (rol == "1") {<a class="btn btn-outline-success d-flex align-items-center justify-content-center" [routerLink]="['/docenteMateria/agregar']">
+                            <mat-icon>add_circle</mat-icon>AÑADIR
+                    </a>        }
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Docente_ID</th>
+                        <th>Materia_ID</th>
+                        @if (rol == "1") { <th>Acciones</th> }
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let docenteMateria of docenteMaterias">
+                        <td>{{ docenteMateria.id }}</td>
+                        <td>{{ docenteMateria.docente_id }}</td>
+                        <td>{{ docenteMateria.materia_id }}</td>
+                        @if (rol == "1"){<td>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-warning" (click)="editarDocenteMateria(docenteMateria)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger" (click)="eliminarDocenteMateria(docenteMateria)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                        </td>}
+                    </tr>
+                    </tbody>
+                </table>
+            </div>    
+        </div>
+    </div>
+  </section>
