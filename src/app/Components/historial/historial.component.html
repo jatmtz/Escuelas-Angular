@@ -1,16 +1,18 @@
 <div class="container">
     <h2>Historial de Acciones</h2>
-    <div *ngFor="let accion of historial" class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title">El usuario: {{ accion.user_id }} hizo: {{ accion.accion }} a las: {{ accion.created_at }}</h5>
-        <p class="card-text">
-          Endpoint: {{ accion.endpoint }} <br>
-          Metodo: {{ accion.verb }} <br>
-          Acción: {{ accion.action }} <br>
-          Datos: {{ accion.data.nombre }} <br>
-          Actualizado: {{ accion.updated_at }}
-        </p>
+    <ng-container *ngFor="let accion of historial">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">El usuario: {{ accion.user_id }} hizo: {{ accion.accion }} a las: {{ accion.created_at }}</h5>
+          <p class="card-text">
+            Endpoint: {{ accion.endpoint }} <br>
+            Verbo: {{ accion.verb }} <br>
+            Acción: {{ accion.action }} <br>
+            Datos: {{ accion.data.nombre }} <br>
+            Actualizado: {{ accion.updated_at }}
+          </p>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </div>
   
