@@ -1,10 +1,11 @@
 import { Component,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-turno-post',
@@ -17,12 +18,12 @@ export class turnoPostComponent {
   turnoObj: turno;
   turnoForm: FormGroup;
   
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) {
     this.turnoForm = this.formBuilder.group({
       turno: ['', [
         Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50),
+        Validators.minLength(2),
+        Validators.maxLength(2),
         Validators.pattern(/^[a-zA-ZñÑ\s]+$/)
       ]]
     });
@@ -33,8 +34,8 @@ export class turnoPostComponent {
     this.turnoForm = this.formBuilder.group({
       turno: ['', [
         Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50),
+        Validators.minLength(2),
+        Validators.maxLength(2),
         Validators.pattern(/^[a-zA-ZñÑ\s]+$/)
       ]]
     });
@@ -45,9 +46,15 @@ export class turnoPostComponent {
     if (this.turnoForm.invalid) {
       return;
     }
-    this.http.post('http://' + window.location.hostname + ':8000/api/postturnos', this.turnoObj).subscribe(
+    if (this.turnoObj.turno !== "TM" && this.turnoObj.turno !== "TN") {
+      alert("solo TN o TM");
+      return;
+    }
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://' + window.location.hostname + ':8000/api/auth/postTurnos', this.turnoObj,{ headers: headers2 }).subscribe(
       (res: any) => {
-        if (res.msg === "turno creado") {
+        if (res.msg === "Turno creado") {
           alert("turno creado");
           this.router.navigate(['layout/turnos']);
         } else {

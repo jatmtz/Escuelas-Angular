@@ -31,7 +31,7 @@ export class CarrerasComponent {
   obtenerCarreras() {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://' + window.location.hostname + ':8000/api/getCarreras').subscribe((res: any) => {
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/getCarreras', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carreras") {
         this.carreras = res.data;
       } else {
@@ -49,7 +49,7 @@ export class CarrerasComponent {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     if (confirm("¿Estás seguro de eliminar la carrera?")){
-    this.http.delete('http://' + window.location.hostname + ':8000/api/deleteCarreras/' + carrera.id).subscribe((res: any) => {
+    this.http.delete('http://' + window.location.hostname + ':8000/api/auth/deleteCarreras/' + carrera.id, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carrera eliminada") {
         this.obtenerCarreras();
       } else {

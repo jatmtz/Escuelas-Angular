@@ -1,10 +1,11 @@
 import { Component,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-grupo-post',
@@ -21,30 +22,27 @@ export class GrupoPostComponent {
   turnoObj: Turno;
   turnos: Turno[] = [];
   
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder,
+    private cookieService: CookieService) {
     this.grupoForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(2),
         Validators.maxLength(50),
-        Validators.pattern(/^[a-zA-ZñÑ\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑ0-9\s]+$/)
       ]],
       clave: ['', [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50),
-        Validators.pattern(/^[a-zA-ZñÑ\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑ0-9\s]+$/)
       ]],
       carrera_id: ['', [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]],
       turno_id: ['', [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]]
     });
@@ -57,29 +55,26 @@ export class GrupoPostComponent {
     this.grupoForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(2),
         Validators.maxLength(50),
-        Validators.pattern(/^[a-zA-ZñÑ\s]+$/)
+        Validators.pattern(/^[a-zA-ZñÑ0-9\s]+$/)
       ]],
       clave: ['', [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(10)
+        Validators.pattern(/^[a-zA-ZñÑ0-9\s]+$/)
       ]],
       carrera_id: ['', [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]],
       turno_id: ['', [
         Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
         Validators.pattern(/^[0-9]+$/)
       ]]
     });
     this.obtenerCarreras();
+    this.obtenerTurnos();
   }
   
 
@@ -87,9 +82,11 @@ export class GrupoPostComponent {
     if (this.grupoForm.invalid) {
       return; 
     }
-    this.http.post('http://' + window.location.hostname + ':8000/api/postGrupos', this.grupoObj).subscribe(
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://' + window.location.hostname + ':8000/api/auth/postGrupos', this.grupoObj,{ headers: headers2 }).subscribe(
       (res: any) => {
-        if (res.msg === "Grupo creada") {
+        if (res.msg === "Grupo creado") {
           alert("Grupo creada");
           this.router.navigate(['layout/grupos']);
         } else {
@@ -104,7 +101,9 @@ export class GrupoPostComponent {
   }
 
   obtenerCarreras() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/getCarreras').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/getCarreras', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carreras") {
         this.carreras = res.data;
       } else {
@@ -114,7 +113,9 @@ export class GrupoPostComponent {
   }
 
   obtenerTurnos() {
-    this.http.get('http://127.0.0.0.1:8000/api/getTurnos').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getTurnos', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Turnos") {
         this.turnos = res.data;
       } else {

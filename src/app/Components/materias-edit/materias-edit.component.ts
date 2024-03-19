@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-materia-edit',
@@ -22,7 +23,7 @@ export class MateriaEditComponent {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router, private formBuilder: FormBuilder) {
+    private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) {
     const materiaId = this.route.snapshot.paramMap.get('id');
     this.obtenerMateriaPorId(materiaId);
     this.materiaForm = this.formBuilder.group({
@@ -74,7 +75,9 @@ export class MateriaEditComponent {
   
 
   editarMateria() {
-    this.http.put('http://127.0.0.0.1:8000/api/putMaterias/' + this.materiaObj.id, this.materiaObj).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.put('http://127.0.0.0.1:8000/api/auth/putMaterias/' + this.materiaObj.id, this.materiaObj,{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Materia actualizada") {
         alert("Materia actualizada");
         this.router.navigate(['/layout/materias']);
@@ -85,7 +88,9 @@ export class MateriaEditComponent {
   }
 
   obtenerCarreras() {
-    this.http.get('http://127.0.0.0.1:8000/api/getCarreras').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.0.1:8000/api/auth/getCarreras',{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carreras") {
         this.carreras = res.data;
       } else {
@@ -95,7 +100,9 @@ export class MateriaEditComponent {
   }
 
   obtenerMateriaPorId(materiaId: any) {
-    this.http.get('http://127.0.0.0.1:8000/api/showMaterias/' + materiaId).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.0.1:8000/api/auth/showMaterias/' + materiaId,{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Materia") {
         this.materiaObj = res.data;
         this.materiaObj.id = this.materiaObj.id;

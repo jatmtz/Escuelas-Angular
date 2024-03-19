@@ -42,7 +42,7 @@ export class turnosComponent implements OnInit{
   }
 
   editarturno(turno: turno) {
-    this.router.navigate(['/editar/', turno.id]);
+    this.router.navigate(['/turnos/editar/', turno.id]);
     console.log('Editar turno:', turno);
   }
 

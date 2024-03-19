@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-carrera-edit',
@@ -22,7 +23,8 @@ export class CarreraEditComponent {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router, private formBuilder: FormBuilder) {
+    private router: Router, private formBuilder: FormBuilder,
+    private cookieService: CookieService) {
     const carreraId = this.route.snapshot.paramMap.get('id');
     this.obtenerCarreraPorId(carreraId);
     this.carreraForm = this.formBuilder.group({
@@ -74,7 +76,9 @@ export class CarreraEditComponent {
   
 
   editarCarrera() {
-    this.http.put('http://127.0.0.0.1:8000/api/putCarreras/' + this.carreraObj.id, this.carreraObj).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.put('http://127.0.0.1:8000/api/auth/putCarreras/' + this.carreraObj.id, this.carreraObj,{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carrera actualizada") {
         alert("Carrera actualizada");
         this.router.navigate(['/layout/carreras']);
@@ -85,7 +89,9 @@ export class CarreraEditComponent {
   }
 
   obtenerEscuelas() {
-    this.http.get('http://127.0.0.0.1:8000/api/getEscuelas').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getEscuelas', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Escuelas") {
         this.escuelas = res.data;
       } else {
@@ -95,7 +101,9 @@ export class CarreraEditComponent {
   }
 
   obtenerCarreraPorId(carreraId: any) {
-    this.http.get('http://127.0.0.0.1:8000/api/showCarreras/' + carreraId).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/showCarreras/' + carreraId,{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carrera") {
         this.carreraObj = res.data;
         this.carreraObj.id = this.carreraObj.id;

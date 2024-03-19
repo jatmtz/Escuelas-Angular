@@ -1,10 +1,11 @@
 import { Component,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-materia-post',
@@ -19,7 +20,7 @@ export class MateriaPostComponent {
   carreraObj: Carrera;
   carreras: Carrera[] = [];
   
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) {
     this.materiaForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
@@ -72,7 +73,9 @@ export class MateriaPostComponent {
     if (this.materiaForm.invalid) {
       return; 
     }
-    this.http.post('http://' + window.location.hostname + ':8000/api/postMaterias', this.materiaObj).subscribe(
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://' + window.location.hostname + ':8000/api/auth/postMaterias', this.materiaObj,{ headers: headers2 }).subscribe(
       (res: any) => {
         if (res.msg === "Materia creada") {
           alert("Materia creada");
@@ -89,7 +92,9 @@ export class MateriaPostComponent {
   }
 
   obtenerCarreras() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/getCarreras').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/getCarreras',{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carreras") {
         this.carreras = res.data;
       } else {

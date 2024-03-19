@@ -1,10 +1,11 @@
 import { Component,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-edificio-post',
@@ -19,7 +20,7 @@ export class EdificioPostComponent {
   escuelaObj: Escuela;
   escuelas: Escuela[] = [];
   
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) {
     this.edificioForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
@@ -61,10 +62,12 @@ export class EdificioPostComponent {
     if (this.edificioForm.invalid) {
       return; 
     }
-    this.http.post('http://' + window.location.hostname + ':8000/api/postEdificios', this.edificioObj).subscribe(
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://' + window.location.hostname + ':8000/api/auth/postEdificios', this.edificioObj, {headers : headers2}).subscribe(
       (res: any) => {
-        if (res.msg === "Edificio creada") {
-          alert("Edificio creada");
+        if (res.msg === "Edificio creado") {
+          alert("Edificio creado");
           this.router.navigate(['layout/edificios']);
         } else {
           alert("Error al crear la edificio");
@@ -78,7 +81,9 @@ export class EdificioPostComponent {
   }
 
   obtenerEscuelas() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/getEscuelas').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/getEscuelas', {headers: headers2}).subscribe((res: any) => {
       if (res.msg === "Escuelas") {
         this.escuelas = res.data;
       } else {

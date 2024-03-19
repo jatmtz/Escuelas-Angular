@@ -70,7 +70,7 @@
                   </div>
                   <div class="form-check mb-3">
                     <label for="carrera">Carrera:</label>
-                    <select formControlName="carrera_id" id="carrera" name="carrera" class="form-control" [class.is-invalid]="alumnoForm.get('carrera_id')?.invalid && alumnoForm.get('carrera_id')?.touched" required [(ngModel)]="alumnoObj.carrera_id">
+                    <select formControlName="carrera_id" id="carrera" name="carrera" class="form-control" [class.is-invalid]="alumnoForm.get('carrera_id')?.invalid && alumnoForm.get('carrera_id')?.touched" required [(ngModel)]="alumnoObj.carrera_id" (change)="obtenerGrupos(alumnoForm.get('carrera_id')?.value)">
                       <option value="" disabled selected>Selecciona una carrera</option>
                       <option *ngFor="let carrera of carreras" [value]="carrera.id">{{carrera.nombre}}</option>
                     </select>

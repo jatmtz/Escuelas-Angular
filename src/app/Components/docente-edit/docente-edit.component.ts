@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-docente-edit',
@@ -22,7 +23,8 @@ export class DocenteEditComponent  implements OnInit{
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cookieService: CookieService
   ) {
     this.docenteForm = this.formBuilder.group({
       nombre: ['', [
@@ -83,7 +85,9 @@ export class DocenteEditComponent  implements OnInit{
   }
 
   editarDocente() {
-    this.http.put('http://' + window.location.hostname + ':8000/api/putDocentes/' + this.docente.id, this.docenteObj).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.put('http://' + window.location.hostname + ':8000/api/auth/putDocentes/' + this.docente.id, this.docenteObj, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Docente actualizado") {
         alert("Docente actualizado");
         this.router.navigate(['/layout/docentes']);
@@ -94,7 +98,9 @@ export class DocenteEditComponent  implements OnInit{
   }
 
   obtenerDocentePorId(docenteId: any) {
-    this.http.get('http://' + window.location.hostname + ':8000/api/showDocentes/' + docenteId).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/showDocentes/' + docenteId,{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Docente") {
         this.docente = res.data;
         this.docenteObj.id = this.docente.id;

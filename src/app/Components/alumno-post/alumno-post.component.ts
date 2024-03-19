@@ -103,7 +103,7 @@ export class AlumnoPostComponent {
         Validators.pattern(/^[0-9]+$/)
       ]]
     });
-    this.obtenerGrupos();
+    this.obtenerGrupos(0);
     this.obtenerCarreras()
   }
   
@@ -130,10 +130,10 @@ export class AlumnoPostComponent {
     );
   }
 
-  obtenerGrupos() {
+  obtenerGrupos(carrera_id: number) {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get('http://127.0.0.1:8000/api/auth/getGrupos', { headers: headers2 }).subscribe((res: any) => {
+    this.http.get('http://127.0.0.1:8000/api/auth/GruposCarrera/'+carrera_id, { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Grupos") {
         this.grupos = res.data;
       } else {

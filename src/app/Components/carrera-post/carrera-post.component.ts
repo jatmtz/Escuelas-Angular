@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} f
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-carrera-post',
@@ -19,7 +20,7 @@ export class CarreraPostComponent {
   escuelaObj: Escuela;
   escuelas: Escuela[] = [];
   
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) {
     this.carreraForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
@@ -72,7 +73,7 @@ export class CarreraPostComponent {
     if (this.carreraForm.invalid) {
       return; 
     }
-    const token = localStorage.getItem('token');
+    const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.post('http://127.0.0.1:8000/api/auth/postCarreras', this.carreraObj, { headers: headers2 }).subscribe(
       (res: any) => {
@@ -92,7 +93,9 @@ export class CarreraPostComponent {
   
 
   obtenerEscuelas() {
-    this.http.get('http://' + window.location.hostname + ':8000/api/getEscuelas').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://' + window.location.hostname + ':8000/api/auth/getEscuelas', { headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Escuelas") {
         this.escuelas = res.data;
       } else {

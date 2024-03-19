@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-grupos-edit',
@@ -24,7 +25,7 @@ export class GruposEditComponent {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router, private formBuilder: FormBuilder) {
+    private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) {
     const grupoId = this.route.snapshot.paramMap.get('id');
     this.obtenerGrupoPorId(grupoId);
     this.grupoForm = this.formBuilder.group({
@@ -89,8 +90,10 @@ export class GruposEditComponent {
   }
 
   editarGrupo() {
-    this.http.put('http://127.0.0.0.1:8000/api/putGrupos/' + this.grupoObj.id, this.grupoObj).subscribe((res: any) => {
-      if (res.msg === "Grupo actualizada") {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.put('http://127.0.0.1:8000/api/auth/putGrupos/' + this.grupoObj.id, this.grupoObj, { headers: headers2 }).subscribe((res: any) => {
+      if (res.msg === "Grupo actualizado") {
         alert("Grupo actualizada");
         this.router.navigate(['/layout/grupos']);
       } else {
@@ -100,7 +103,9 @@ export class GruposEditComponent {
   }
 
   obtenerCarreras() {
-    this.http.get('http://127.0.0.0.1:8000/api/getCarreras').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getCarreras',{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Carreras") {
         this.carreras = res.data;
       } else {
@@ -110,7 +115,9 @@ export class GruposEditComponent {
   }
 
   obtenerTurnos() {
-    this.http.get('http://127.0.0.0.1:8000/api/getTurnos').subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/auth/getTurnos',{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Turnos") {
         this.turnos = res.data;
       } else {
@@ -120,7 +127,9 @@ export class GruposEditComponent {
   }
 
   obtenerGrupoPorId(grupoId: any) {
-    this.http.get('http://127.0.0.0.1:8000/api/showGrupos/' + grupoId).subscribe((res: any) => {
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get('http://127.0.0.1:8000/api/showGrupos/' + grupoId,{ headers: headers2 }).subscribe((res: any) => {
       if (res.msg === "Grupos") {
         this.grupoObj = res.data;
         this.grupoObj.id = this.grupoObj.id;

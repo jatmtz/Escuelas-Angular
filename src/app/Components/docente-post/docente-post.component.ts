@@ -1,10 +1,11 @@
 import { Component,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-docente-post',
@@ -17,7 +18,7 @@ export class DocentePostComponent {
   docenteObj: Docente;
   docenteForm: FormGroup;
   
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder, private cookieService: CookieService) {
     this.docenteForm = this.formBuilder.group({
       nombre: ['', [
         Validators.required,
@@ -79,7 +80,9 @@ export class DocentePostComponent {
     if (this.docenteForm.invalid) {
       return;
     }
-    this.http.post('http://' + window.location.hostname + ':8000/api/postDocentes', this.docenteObj).subscribe(
+    const token = this.cookieService.get('token');
+    const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.post('http://' + window.location.hostname + ':8000/api/postDocentes', this.docenteObj, { headers: headers2 }).subscribe(
       (res: any) => {
         if (res.msg === "Docente creado") {
           alert("Docente creado");

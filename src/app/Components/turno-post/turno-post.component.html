@@ -8,15 +8,15 @@
                 <div class="form-group">
                   <div class="form-check mb-3">
                     <label for="turno">Introduce el turno del turno:</label>
-                    <input formControlName="turno" id="turno" name="turno" class="form-control" [class.is-invalid]="turnoForm.get('turno')?.invalid && turnoForm.get('turno')?.touched" placeholder="Ej. Coahuila" required minlength="3" [(ngModel)]="turnoObj.turno">
+                    <input formControlName="turno" id="turno" name="turno" class="form-control" [class.is-invalid]="turnoForm.get('turno')?.invalid && turnoForm.get('turno')?.touched" placeholder="Ej. TM" required minlength="2" [(ngModel)]="turnoObj.turno">
                     <div class="invalid-feedback" *ngIf="turnoForm.get('turno')?.hasError('required') && turnoForm.get('turno')?.touched">
                       El turno es obligatorio.
                     </div>
                     <div class="invalid-feedback" *ngIf="turnoForm.get('turno')?.hasError('minlength') && turnoForm.get('turno')?.touched">
-                      El turno debe tener al menos 3 caracteres.
+                      El turno debe tener al menos 2 caracteres.
                     </div>
                     <div class="invalid-feedback" *ngIf="turnoForm.get('turno')?.hasError('maxlength') && turnoForm.get('turno')?.touched">
-                      El turno no debe exceder los 50 caracteres.
+                      El turno no debe exceder los 2 caracteres.
                     </div>
                     <div class="invalid-feedback" *ngIf="turnoForm.get('turno')?.hasError('pattern') && turnoForm.get('turno')?.touched">
                       El turno debe contener solo letras y espacios.

@@ -77,12 +77,12 @@
                                     <label for="carrera_id">Carrera:</label>
                                     <select formControlName="carrera_id" id="carrera_id" name="carrera_id" class="form-control"
                                         [class.is-invalid]="alumnoForm.get('carrera_id')?.invalid && alumnoForm.get('carrera_id')?.touched"
-                                        required [(ngModel)]="alumnoObj.carrera_id">
+                                        required [(ngModel)]="alumnoObj.carrera_id" (change)="obtenerGrupos(alumnoForm.get('carrera_id')?.value)">
                                         <option value="" disabled selected>Selecciona una carrera</option>
                                         <option *ngFor="let carrera of carreras" [value]="carrera.id">{{ carrera.nombre }}</option>
                                     </select>
                                     <div class="invalid-feedback"
-                                        *ngIf="alumnoForm.get('carrera_id')?.hasError('required') && alumnoForm.get('carrera_id')?.touched">
+                                        *ngIf="alumnoForm.get('carrera_id')?.hasError('required') && alumnoForm.get('carrera_id')?.touched" >
                                         La carrera es obligatoria.
                                     </div>
                                 </div>
