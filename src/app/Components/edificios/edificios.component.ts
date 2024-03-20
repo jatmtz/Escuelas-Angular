@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink} from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { CookieService } from 'ngx-cookie-service';
+import Echo from 'laravel-echo';
 
 @Component({
   selector: 'app-edificios',
@@ -25,6 +26,23 @@ export class EdificiosComponent {
   ngOnInit(): void {
     this.rol = this.cookieService.get('rol');
     this.obtenerEdificios();
+    this.webSocket();
+  }
+
+  webSocket(){
+    const echo = new Echo ({
+      broadcaster: 'pusher',
+      cluster: 'mt1',
+      key: 'ABCDEF1234',
+      wsHost: window.location.hostname,
+      disableStats: true,
+      enabledTransports: ['ws']
+    });
+    echo.channel('EdificiosChannel')
+    .listen('EdificiosActualizado', (resp: any) => {
+      console.log(resp);
+      this.obtenerEdificios();
+    });
   }
 
   obtenerEdificios() {
