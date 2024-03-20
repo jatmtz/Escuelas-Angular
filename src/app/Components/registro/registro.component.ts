@@ -22,11 +22,14 @@ export class RegistroComponent {
     this.errorMessage = '';
   }
 
-  onRegister() {
+  onRegister(event: Event) {
+    event.preventDefault();
+    console.log(this.registerObj);
     this.http.post('http://127.0.0.1:8000/api/register', this.registerObj)
       .subscribe(
         (res: any) => {
-          if (res.result) {
+          console.log(res);
+          if (res.msg === 'Usuario registrado, revisa tu correo para activar tu cuenta') {
             this.router.navigate(['/login']);
           }
         },
@@ -47,8 +50,6 @@ export class RegistroComponent {
           } else {
             this.errorMessage = 'Error en la solicitud';
           }
-          
-          
         }
       );
   }

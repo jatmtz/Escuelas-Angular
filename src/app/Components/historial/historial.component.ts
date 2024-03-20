@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-historial',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './historial.component.html',
   styleUrls: ['./historial.component.css']
 })
