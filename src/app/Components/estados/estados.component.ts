@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink} from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { CookieService } from 'ngx-cookie-service';
+import { SSEService } from '../../sse.service';
 
 
 @Component({
@@ -17,8 +18,9 @@ import { CookieService } from 'ngx-cookie-service';
 export class EstadosComponent implements OnInit{
   estadoObj: Estado;
   rol : string = '';
+  sseSubscription: any;
 
-  constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
+  constructor(private http: HttpClient,private router: Router, private cookieService: CookieService, private sseService: SSEService) {
     this.estadoObj = new Estado()
   }
 
@@ -27,6 +29,21 @@ export class EstadosComponent implements OnInit{
   ngOnInit(): void {
     this.rol = this.cookieService.get('rol');
     this.obtenerEstados();
+    this.suscribirEventosSSE();
+  }
+
+  ngOnDestroy(): void {
+    if (this.sseSubscription) {
+      this.sseSubscription.unsubscribe();
+    }
+  }
+
+  suscribirEventosSSE() {
+    const url = 'http://127.0.0.1:8000/api/auth/sse-estados';
+    this.sseSubscription = this.sseService.getServerSentEvents(url).subscribe((evento: any) => {
+      console.log('Evento SSE recibido:', evento);
+      this.obtenerEstados();
+    });
   }
 
   obtenerEstados() {
