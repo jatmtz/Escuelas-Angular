@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterLink} from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { CookieService } from 'ngx-cookie-service';
+import { interval, Subscription, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-docentes',
@@ -16,20 +18,32 @@ import { CookieService } from 'ngx-cookie-service';
 export class DocentesComponent {
   docenteObj: Docente;
   rol : string='';
+  private subscription: Subscription;
 
   constructor(private http: HttpClient,private router: Router, private cookieService: CookieService) {
     this.docenteObj = new Docente()
+    this.subscription = new Subscription();
   }
 
   docentes: Docente[] = [];
+
 
   ngOnInit(): void {
     console.log('Rol:', this.cookieService.get('rol'));
     this.rol = this.cookieService.get('rol');
     this.obtenerDocentes();
-  }
+    timer(0, 10000).pipe().subscribe(() => {
+      this.obtenerDocentes();
+    });
+}
 
-  obtenerDocentes() {
+ngOnDestroy(): void {
+  if (this.subscription) {
+    this.subscription.unsubscribe();
+  }
+}
+
+  obtenerDocentes()  {
     const token = this.cookieService.get('token');
     const headers2 = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.get('http://127.0.0.1:8000/api/auth/getDocentes', { headers: headers2 }).subscribe((res: any) => {
